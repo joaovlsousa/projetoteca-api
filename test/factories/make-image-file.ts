@@ -1,5 +1,5 @@
 import { readFile, stat } from 'node:fs/promises'
-import type { ImageFile } from '@core/types/image-file.ts'
+import type { ImageFile } from '@core/types/image.ts'
 
 export async function makeImageFile(): Promise<ImageFile> {
   const pathToImage = './tmp/image_to_test.png'

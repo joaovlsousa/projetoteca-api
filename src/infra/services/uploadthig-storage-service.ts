@@ -1,6 +1,6 @@
 import { env } from '@config/env.ts'
 import { BadGatewayError } from '@core/errors/bad-gateway-error.ts'
-import type { ImageFile } from '@core/types/image-file.ts'
+import type { ImageFile } from '@core/types/image.ts'
 import type {
   StorageService,
   UploadResponse,

@@ -1,5 +1,5 @@
 import { unlink, writeFile } from 'node:fs/promises'
-import type { ImageFile } from '@core/types/image-file.ts'
+import type { ImageFile } from '@core/types/image.ts'
 import type {
   StorageService,
   UploadResponse,

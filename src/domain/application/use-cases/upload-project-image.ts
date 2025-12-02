@@ -1,7 +1,7 @@
-import { BadRequestError } from '@core/errors/bad-request-error.ts'
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
-import type { ImageFile } from '@core/types/image-file.ts'
+import { validateImage } from '@core/functions/validate-image.ts'
+import type { ImageFile } from '@core/types/image.ts'
 import type { ProjectsRespository } from '../repositories/projects-repository.ts'
 import type { StorageService } from '../services/storage-service.ts'
 
@@ -12,15 +12,6 @@ interface UploadProjectImageUseCaseRequest {
 }
 
 export class UploadProjectImageUseCase {
-  private readonly MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
-  private readonly IMAGE_MIMETYPES: string[] = [
-    'image/png',
-    'image/jpeg',
-    'image/jpg',
-    'image/webp',
-    'image/svg',
-  ]
-
   public constructor(
     private projectsRepository: ProjectsRespository,
     private storageService: StorageService
@@ -31,13 +22,7 @@ export class UploadProjectImageUseCase {
     projectId,
     userId,
   }: UploadProjectImageUseCaseRequest): Promise<void> {
-    if (image.size > this.MAX_IMAGE_SIZE) {
-      throw new BadRequestError('Invalid image size')
-    }
-
-    if (!this.IMAGE_MIMETYPES.includes(image.mimetype)) {
-      throw new BadRequestError('Invalid mimetype')
-    }
+    validateImage(image)
 
     const project = await this.projectsRepository.findById(projectId)
 

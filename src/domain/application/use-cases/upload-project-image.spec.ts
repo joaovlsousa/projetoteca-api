@@ -1,7 +1,7 @@
 import { BadRequestError } from '@core/errors/bad-request-error.ts'
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
-import type { ImageFile } from '@core/types/image-file.ts'
+import type { ImageFile } from '@core/types/image.ts'
 import { makeImageFile } from '@test/factories/make-image-file.ts'
 import { makeProject } from '@test/factories/make-project.ts'
 import { InMemoryProjectsRepository } from '@test/repositories/in-memory-projects-repository.ts'

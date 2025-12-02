@@ -1,4 +1,4 @@
-import type { ImageFile } from '@core/types/image-file.ts'
+import type { ImageFile } from '@core/types/image.ts'
 
 export interface UploadResponse {
   imageId: string
