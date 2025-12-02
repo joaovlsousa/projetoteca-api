@@ -13,15 +13,13 @@ describe('upload project image', async () => {
   const imageToUpload: ImageFile = await makeImageFile()
 
   let inMemoryProjectsRepository: InMemoryProjectsRepository
-  let testStorageService: TestStorageService
   let uploadProjectImageUseCase: UploadProjectImageUseCase
 
   beforeEach(() => {
     inMemoryProjectsRepository = new InMemoryProjectsRepository()
-    testStorageService = new TestStorageService()
     uploadProjectImageUseCase = new UploadProjectImageUseCase(
       inMemoryProjectsRepository,
-      testStorageService
+      new TestStorageService()
     )
   })
 

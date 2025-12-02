@@ -10,15 +10,13 @@ describe('create tech', async () => {
   const imageToUpload: ImageFile = await makeImageFile()
 
   let inMemoryTechsRepository: InMemoryTechsRepository
-  let testStorageService: TestStorageService
   let createTechUseCase: CreateTechUseCase
 
   beforeEach(() => {
     inMemoryTechsRepository = new InMemoryTechsRepository()
-    testStorageService = new TestStorageService()
     createTechUseCase = new CreateTechUseCase(
       inMemoryTechsRepository,
-      testStorageService
+      new TestStorageService()
     )
   })
 

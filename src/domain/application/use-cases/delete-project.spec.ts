@@ -2,6 +2,7 @@ import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
 import { makeProject } from '@test/factories/make-project.ts'
 import { InMemoryProjectsRepository } from '@test/repositories/in-memory-projects-repository.ts'
+import { TestStorageService } from '@test/services/test-storage-service.ts'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { DeleteProjectUseCase } from './delete-project.ts'
 
@@ -11,7 +12,10 @@ describe('delete project', () => {
 
   beforeEach(() => {
     inMemoryProjectsRepository = new InMemoryProjectsRepository()
-    deleteProjectUseCase = new DeleteProjectUseCase(inMemoryProjectsRepository)
+    deleteProjectUseCase = new DeleteProjectUseCase(
+      inMemoryProjectsRepository,
+      new TestStorageService()
+    )
   })
 
   it('should be able to delete a project', async () => {
