@@ -36,7 +36,7 @@ export const projectsTable = pgTable('projects', {
 
 export const techsTable = pgTable('techs', {
   id: text().primaryKey(),
-  name: text().notNull(),
+  name: text().notNull().unique(),
   imageUrl: text().notNull(),
   imageId: text().notNull(),
   createdAt: timestamp().notNull(),

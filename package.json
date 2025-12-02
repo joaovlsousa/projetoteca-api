@@ -9,7 +9,8 @@
     "lint": "@biomejs/biome check --write ./src",
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx --env-file=.env temp/seed.ts"
   },
   "keywords": [],
   "author": "",

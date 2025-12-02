@@ -7,7 +7,7 @@ import type {
 import { createId } from '@paralleldrive/cuid2'
 
 export class TestStorageService implements StorageService {
-  private readonly pathToSavedImages: string = './tmp'
+  private readonly pathToSavedImages: string = './temp'
 
   async upload(imageFile: ImageFile): Promise<UploadResponse> {
     const imageExtension = imageFile.mimetype.split('/')[1]
