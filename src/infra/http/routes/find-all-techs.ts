@@ -1,3 +1,4 @@
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import { FindAllTechsUseCase } from '@domain/application/use-cases/find-all-techs.ts'
 import { DrizzleTechsRepository } from '@infra/database/drizzle/repositories/drizzle-techs-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
@@ -21,12 +22,8 @@ export const findAllTechsRoute: FastifyPluginAsyncZod = async (app) => {
               })
             ),
           }),
-          403: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
+          403: httpErrorSchema,
+          500: httpErrorSchema,
         },
       },
       preHandler: [clientHostMiddleware],

@@ -1,4 +1,5 @@
 import { BadRequestError } from '@core/errors/bad-request-error.ts'
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import type { ImageFile } from '@core/types/image.ts'
 import { UploadProjectImageUseCase } from '@domain/application/use-cases/upload-project-image.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
@@ -20,24 +21,12 @@ export const uploadProjectImageRoute: FastifyPluginAsyncZod = async (app) => {
         }),
         response: {
           204: z.void(),
-          400: z.object({
-            message: z.string(),
-          }),
-          401: z.object({
-            message: z.string(),
-          }),
-          403: z.object({
-            message: z.string(),
-          }),
-          404: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
-          522: z.object({
-            message: z.string(),
-          }),
+          400: httpErrorSchema,
+          401: httpErrorSchema,
+          403: httpErrorSchema,
+          404: httpErrorSchema,
+          500: httpErrorSchema,
+          522: httpErrorSchema,
         },
       },
       preHandler: [authMiddleware, clientHostMiddleware],

@@ -1,3 +1,4 @@
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import { FindProjectsByUserIdUseCase } from '@domain/application/use-cases/find-projects-by-user-id.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
@@ -32,12 +33,9 @@ export const findProjectsByUserIdRoute: FastifyPluginAsyncZod = async (app) => {
               })
             ),
           }),
-          401: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
+          401: httpErrorSchema,
+          403: httpErrorSchema,
+          500: httpErrorSchema,
         },
       },
       preHandler: [authMiddleware, clientHostMiddleware],

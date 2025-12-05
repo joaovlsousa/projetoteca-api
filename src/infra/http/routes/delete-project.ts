@@ -1,3 +1,4 @@
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import { DeleteProjectUseCase } from '@domain/application/use-cases/delete-project.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import { UploadthingStorageService } from '@infra/services/uploadthig-storage-service.ts'
@@ -18,21 +19,11 @@ export const deleteProjectRoute: FastifyPluginAsyncZod = async (app) => {
         }),
         response: {
           204: z.void(),
-          401: z.object({
-            message: z.string(),
-          }),
-          403: z.object({
-            message: z.string(),
-          }),
-          404: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
-          522: z.object({
-            message: z.string(),
-          }),
+          401: httpErrorSchema,
+          403: httpErrorSchema,
+          404: httpErrorSchema,
+          500: httpErrorSchema,
+          522: httpErrorSchema,
         },
       },
       preHandler: [authMiddleware, clientHostMiddleware],

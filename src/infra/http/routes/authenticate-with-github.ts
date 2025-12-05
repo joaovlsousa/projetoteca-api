@@ -1,3 +1,4 @@
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import { AuthenticateWithGithubUseCase } from '@domain/application/use-cases/authenticate-with-github.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import { GithubOAuthService } from '@infra/services/github-oauth-service.ts'
@@ -21,12 +22,9 @@ export const authenticateWithGithubRoute: FastifyPluginAsyncZod = async (
           201: z.object({
             token: z.string(),
           }),
-          400: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
+          400: httpErrorSchema,
+          403: httpErrorSchema,
+          500: httpErrorSchema,
         },
       },
       preHandler: [clientHostMiddleware],

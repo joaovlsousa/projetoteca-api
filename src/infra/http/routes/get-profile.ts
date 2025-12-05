@@ -1,3 +1,4 @@
+import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import { GetProfileUseCase } from '@domain/application/use-cases/get-profile.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
@@ -20,12 +21,9 @@ export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
               avatarUrl: z.httpUrl(),
             }),
           }),
-          401: z.object({
-            message: z.string(),
-          }),
-          500: z.object({
-            message: z.string(),
-          }),
+          401: httpErrorSchema,
+          403: httpErrorSchema,
+          500: httpErrorSchema,
         },
       },
       preHandler: [authMiddleware, clientHostMiddleware],
