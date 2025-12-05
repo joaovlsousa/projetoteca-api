@@ -5,6 +5,7 @@ import { errorHandler } from '@infra/http/errors/error-handler.ts'
 import { authenticateWithGithubRoute } from '@infra/http/routes/authenticate-with-github.ts'
 import { createProjectRoute } from '@infra/http/routes/create-project.ts'
 import { deleteProjectRoute } from '@infra/http/routes/delete-project.ts'
+import { findAllTechsRoute } from '@infra/http/routes/find-all-techs.ts'
 import { findProjectByIdRoute } from '@infra/http/routes/find-project-by-id.ts'
 import { findProjectsByUserIdRoute } from '@infra/http/routes/find-projects-by-user-id.ts'
 import { getProfileRoute } from '@infra/http/routes/get-profile.ts'
@@ -56,6 +57,7 @@ server.register(findProjectByIdRoute)
 server.register(getProfileRoute)
 server.register(uploadProjectImageRoute)
 server.register(deleteProjectRoute)
+server.register(findAllTechsRoute)
 
 server
   .listen({

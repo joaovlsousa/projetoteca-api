@@ -72,3 +72,9 @@ Origin: {{origin}}
 DELETE {{baseUrl}}/projects/{{projectId}}
 Authorization: Bearer {{token}}
 Origin: {{origin}}
+
+###
+
+# @name findAllTechs
+GET {{baseUrl}}/techs
+Origin: {{origin}}
