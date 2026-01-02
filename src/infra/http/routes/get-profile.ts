@@ -4,7 +4,6 @@ import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/dri
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
-import { clientHostMiddleware } from '../middlewares/client-host-middleware.ts'
 
 export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
@@ -26,7 +25,7 @@ export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
           500: httpErrorSchema,
         },
       },
-      preHandler: [authMiddleware, clientHostMiddleware],
+      preHandler: [authMiddleware],
     },
     async (request, reply) => {
       const userId = request.getCurrentUserId()

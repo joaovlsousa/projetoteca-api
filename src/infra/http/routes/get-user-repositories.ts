@@ -5,7 +5,6 @@ import { GithubOAuthService } from '@infra/services/github-oauth-service.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
-import { clientHostMiddleware } from '../middlewares/client-host-middleware.ts'
 
 export const getUserRepositoriesRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
@@ -28,7 +27,7 @@ export const getUserRepositoriesRoute: FastifyPluginAsyncZod = async (app) => {
           522: httpErrorSchema,
         },
       },
-      preHandler: [authMiddleware, clientHostMiddleware],
+      preHandler: [authMiddleware],
     },
     async (request, reply) => {
       const userId = request.getCurrentUserId()

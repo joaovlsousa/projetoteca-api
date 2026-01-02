@@ -1,15 +1,15 @@
 services:
   postgres:
-    container_name: psofthub_db
+    container_name: projetoteca_db
     image: bitnami/postgresql:latest
     ports:
       - '5432:5432'
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=psofthub
+      - POSTGRES_DB=projetoteca
     volumes:
-      - psofthub_pg_data:/bitnami/postgresql
+      - projetoteca_pg_data:/bitnami/postgresql
 
 volumes:
-  psofthub_pg_data:
+  projetoteca_pg_data:

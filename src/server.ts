@@ -30,7 +30,7 @@ server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
 server.register(fastifyCors, {
-  origin: '*',
+  origin: env.CLIENT_APP_URL,
   methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
 })
 server.register(fastifyMultipart)

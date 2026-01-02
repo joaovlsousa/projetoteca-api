@@ -1,6 +1,5 @@
 # Variables
 @baseUrl = http://localhost:3333
-@origin = http://localhost:5173
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
 
@@ -9,7 +8,6 @@
 # @name auth
 POST {{baseUrl}}/sessions/github
 Content-Type: application/json
-Origin: {{origin}}
 
 {
   "code": "e4ed5d62a0b8fd3ec70b"
@@ -20,7 +18,6 @@ Origin: {{origin}}
 # @name getProfile
 GET {{baseUrl}}/profile
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 ###
 
@@ -28,7 +25,6 @@ Origin: {{origin}}
 POST {{baseUrl}}/projects
 Content-Type: application/json
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 {
   "name": "Project API",
@@ -48,14 +44,12 @@ Origin: {{origin}}
 # @name findProjectsByUserId
 GET {{baseUrl}}/projects
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 ###
 
 # @name findProjectById
 GET {{baseUrl}}/projects/{{projectId}}
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 ###
 
@@ -63,7 +57,6 @@ Origin: {{origin}}
 PUT {{baseUrl}}/projects/{{projectId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 {
   "name": "Project API Updated",
@@ -82,24 +75,20 @@ Origin: {{origin}}
 # @name deleteProject
 DELETE {{baseUrl}}/projects/{{projectId}}
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 ###
 
 # @name findAllTechs
 GET {{baseUrl}}/techs
-Origin: {{origin}}
 
 ###
 
 # @name getUserRepositories
 GET {{baseUrl}}/repos
 Authorization: Bearer {{token}}
-Origin: {{origin}}
 
 ###
 
 # @name getRepositoryData
 GET {{baseUrl}}/repos/portfolio
 Authorization: Bearer {{token}}
-Origin: {{origin}}

@@ -4,7 +4,6 @@ import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/dri
 import { GithubOAuthService } from '@infra/services/github-oauth-service.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { clientHostMiddleware } from '../middlewares/client-host-middleware.ts'
 
 export const authenticateWithGithubRoute: FastifyPluginAsyncZod = async (
   app
@@ -27,7 +26,6 @@ export const authenticateWithGithubRoute: FastifyPluginAsyncZod = async (
           500: httpErrorSchema,
         },
       },
-      preHandler: [clientHostMiddleware],
     },
     async (request, reply) => {
       const authenticateWithGithubUseCase = new AuthenticateWithGithubUseCase(

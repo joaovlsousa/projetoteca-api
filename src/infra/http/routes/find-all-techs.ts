@@ -3,7 +3,6 @@ import { FindAllTechsUseCase } from '@domain/application/use-cases/find-all-tech
 import { DrizzleTechsRepository } from '@infra/database/drizzle/repositories/drizzle-techs-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { clientHostMiddleware } from '../middlewares/client-host-middleware.ts'
 
 export const findAllTechsRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
@@ -26,7 +25,7 @@ export const findAllTechsRoute: FastifyPluginAsyncZod = async (app) => {
           500: httpErrorSchema,
         },
       },
-      preHandler: [clientHostMiddleware],
+      preHandler: [],
     },
     async (_, reply) => {
       const findAllTechsUseCase = new FindAllTechsUseCase(

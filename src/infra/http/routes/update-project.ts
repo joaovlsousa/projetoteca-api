@@ -5,7 +5,6 @@ import { DrizzleTechsRepository } from '@infra/database/drizzle/repositories/dri
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
-import { clientHostMiddleware } from '../middlewares/client-host-middleware.ts'
 
 export const updateProjectRoute: FastifyPluginAsyncZod = async (app) => {
   app.put(
@@ -38,7 +37,7 @@ export const updateProjectRoute: FastifyPluginAsyncZod = async (app) => {
           500: httpErrorSchema,
         },
       },
-      preHandler: [authMiddleware, clientHostMiddleware],
+      preHandler: [authMiddleware],
     },
     async (request, reply) => {
       const { name, description, type, githubUrl, deployUrl, techsIds } =
