@@ -14,6 +14,7 @@ export interface ProjectProps {
   techs: Tech[]
   imageUrl?: string | null
   imageId?: string | null
+  imageSizeInBytes?: number | null
   githubUrl: string
   deployUrl?: string | null
   createdAt: Date
@@ -64,6 +65,10 @@ export class Project extends Entity<ProjectProps> {
     return this.props.imageId
   }
 
+  public get imageSizeInBytes(): number | undefined | null {
+    return this.props.imageSizeInBytes
+  }
+
   public get githubUrl(): string {
     return this.props.githubUrl
   }
@@ -110,6 +115,10 @@ export class Project extends Entity<ProjectProps> {
 
   public set imageUrl(imageUrl: string | undefined | null) {
     this.props.imageUrl = imageUrl
+  }
+
+  public set imageSizeInBytes(imageSizeInBytes: number | undefined | null) {
+    this.props.imageSizeInBytes = imageSizeInBytes
   }
 
   public set updatedAt(date: Date) {

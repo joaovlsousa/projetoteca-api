@@ -34,6 +34,9 @@ describe('upload project image', async () => {
     })
 
     expect(inMemoryProjectsRepository.projects[0].imageId).toBeTruthy()
+    expect(inMemoryProjectsRepository.projects[0].imageSizeInBytes).toEqual(
+      imageToUpload.size
+    )
   })
 
   it('should be able to remove an image', async () => {

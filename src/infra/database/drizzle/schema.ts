@@ -37,6 +37,7 @@ export const projectsTable = pgTable('projects', {
     }),
   imageUrl: text(),
   imageId: text(),
+  imageSizeInBytes: integer(),
   githubUrl: text().notNull(),
   deployUrl: text(),
   createdAt: timestamp().notNull(),

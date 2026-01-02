@@ -42,6 +42,7 @@ export class UploadProjectImageUseCase {
 
     project.imageId = imageId
     project.imageUrl = imageUrl
+    project.imageSizeInBytes = image.size
     project.updatedAt = new Date()
 
     await this.projectsRepository.save(project)
