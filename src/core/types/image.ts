@@ -5,11 +5,5 @@ export interface ImageFile {
   size: number
 }
 
-export const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
-export const IMAGE_MIMETYPES: string[] = [
-  'image/png',
-  'image/jpeg',
-  'image/jpg',
-  'image/webp',
-  'image/svg',
-]
+export const MAX_IMAGE_SIZE = 1024 * 1024 // 1MB
+export const IMAGE_MIMETYPES: string[] = ['image/png', 'image/webp']
