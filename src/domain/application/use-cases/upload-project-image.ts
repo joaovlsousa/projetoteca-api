@@ -27,11 +27,11 @@ export class UploadProjectImageUseCase {
     const project = await this.projectsRepository.findById(projectId)
 
     if (!project) {
-      throw new NotFoundError('Project not found')
+      throw new NotFoundError('Projeto não encontrado')
     }
 
     if (project.userId.toString() !== userId) {
-      throw new ForbiddenError('You cannot perform this action')
+      throw new ForbiddenError()
     }
 
     if (project.imageId) {

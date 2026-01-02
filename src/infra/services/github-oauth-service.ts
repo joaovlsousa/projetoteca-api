@@ -93,7 +93,7 @@ export class GithubOAuthService implements OAuthService {
     )
 
     if (!githubUserRepositoriesResponse.ok) {
-      throw new BadGatewayError()
+      throw new BadGatewayError('Não foi possível buscar os repositórios')
     }
 
     const githubUserRepositories = await githubUserRepositoriesResponse.json()
@@ -125,7 +125,9 @@ export class GithubOAuthService implements OAuthService {
     )
 
     if (!githubUserRepositoriesResponse.ok) {
-      throw new BadGatewayError()
+      throw new BadGatewayError(
+        'Não foi possível buscar os dados do repositório'
+      )
     }
 
     const githubUserRepositories = await githubUserRepositoriesResponse.json()

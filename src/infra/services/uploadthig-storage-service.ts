@@ -22,7 +22,7 @@ export class UploadthingStorageService implements StorageService {
     const { data, error } = await this.uploadthingApi.uploadFiles(imageToUpload)
 
     if (error) {
-      throw new BadGatewayError('Could not save image')
+      throw new BadGatewayError('Não foi possível salvar a imagem')
     }
 
     return {
@@ -35,7 +35,7 @@ export class UploadthingStorageService implements StorageService {
     const { success } = await this.uploadthingApi.deleteFiles(imageId)
 
     if (!success) {
-      throw new BadGatewayError('Could not save image')
+      throw new BadGatewayError('Não foi possível excluir a imagem')
     }
   }
 }

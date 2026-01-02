@@ -36,7 +36,7 @@ export const uploadProjectImageRoute: FastifyPluginAsyncZod = async (app) => {
       const file = await request.file()
 
       if (!file) {
-        throw new BadRequestError('Image is required')
+        throw new BadRequestError('A imagem é obrigatória')
       }
 
       const uploadProjectImageUseCase = new UploadProjectImageUseCase(

@@ -10,7 +10,7 @@ export class Content {
   constructor(value: string, length: number, message?: string) {
     if (value.length > length) {
       throw new BadRequestError(
-        message ?? `The value should contain a maximum of ${length} characters.`
+        message ?? `O conteúdo deve ter no máximo ${length} caracteres.`
       )
     }
 

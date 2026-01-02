@@ -1,5 +1,5 @@
 export class ForbiddenError extends Error {
   constructor(message?: string) {
-    super(message ?? 'Forbidden')
+    super(message ?? 'Você não tem autorização para realizar essa ação')
   }
 }

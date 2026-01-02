@@ -37,8 +37,8 @@ server.register(fastifyMultipart)
 server.register(fastifySwagger, {
   openapi: {
     info: {
-      title: 'PSoft Hub API',
-      description: 'API for managing your software projects.',
+      title: 'Projetoteca API',
+      description: 'API para organização de projetos de software.',
       version: '1.0.0',
     },
   },

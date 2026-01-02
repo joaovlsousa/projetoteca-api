@@ -7,10 +7,10 @@ import {
 
 export function validateImage(image: ImageFile): void {
   if (image.size > MAX_IMAGE_SIZE) {
-    throw new BadRequestError('Invalid image size')
+    throw new BadRequestError('Tamanho da imagem inválido')
   }
 
   if (!IMAGE_MIMETYPES.includes(image.mimetype)) {
-    throw new BadRequestError('Invalid mimetype')
+    throw new BadRequestError('Formato de imagem inválido')
   }
 }
