@@ -1,5 +1,5 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { AuthenticateWithGithubUseCase } from '@domain/application/use-cases/authenticate-with-github.ts'
+import { AuthenticateWithGithubUseCase } from '@domain/application/use-cases/users/authenticate-with-github.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import { GithubOAuthService } from '@infra/services/github-oauth-service.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'

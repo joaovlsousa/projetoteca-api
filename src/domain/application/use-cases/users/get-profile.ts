@@ -1,6 +1,6 @@
 import { UnauthorizedError } from '@core/errors/unauthorized-error.ts'
 import type { User } from '@domain/entities/user.ts'
-import type { UsersRespository } from '../repositories/users-repository.ts'
+import type { UsersRespository } from '../../repositories/users-repository.ts'
 
 interface GetProfileUseCaseRequest {
   userId: string

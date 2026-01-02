@@ -2,8 +2,8 @@ import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
 import { validateImage } from '@core/functions/validate-image.ts'
 import type { ImageFile } from '@core/types/image.ts'
-import type { ProjectsRespository } from '../repositories/projects-repository.ts'
-import type { StorageService } from '../services/storage-service.ts'
+import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
+import type { StorageService } from '../../services/storage-service.ts'
 
 interface UploadProjectImageUseCaseRequest {
   image: ImageFile

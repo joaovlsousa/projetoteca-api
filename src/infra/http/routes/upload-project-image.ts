@@ -1,7 +1,7 @@
 import { BadRequestError } from '@core/errors/bad-request-error.ts'
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
 import type { ImageFile } from '@core/types/image.ts'
-import { UploadProjectImageUseCase } from '@domain/application/use-cases/upload-project-image.ts'
+import { UploadProjectImageUseCase } from '@domain/application/use-cases/projects/upload-project-image.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import { UploadthingStorageService } from '@infra/services/uploadthig-storage-service.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'

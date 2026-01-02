@@ -1,8 +1,8 @@
 import { UnauthorizedError } from '@core/errors/unauthorized-error.ts'
 import { formatRepoName } from '@core/functions/format-repo-name.ts'
 import { HashService } from '@core/services/hash-service.ts'
-import type { UsersRespository } from '../repositories/users-repository.ts'
-import type { OAuthService } from '../services/oauth-service.ts'
+import type { UsersRespository } from '../../repositories/users-repository.ts'
+import type { OAuthService } from '../../services/oauth-service.ts'
 
 interface GetUserRepositoriesRequest {
   userId: string

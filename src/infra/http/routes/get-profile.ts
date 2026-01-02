@@ -1,5 +1,5 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { GetProfileUseCase } from '@domain/application/use-cases/get-profile.ts'
+import { GetProfileUseCase } from '@domain/application/use-cases/users/get-profile.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'

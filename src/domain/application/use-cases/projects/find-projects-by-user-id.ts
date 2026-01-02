@@ -1,5 +1,5 @@
 import type { Project } from '@domain/entities/project.ts'
-import type { ProjectsRespository } from '../repositories/projects-repository.ts'
+import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
 
 interface FindProjectsByUserIdUseCaseRequest {
   userId: string

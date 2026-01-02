@@ -1,5 +1,5 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { FindProjectsByIdUseCase } from '@domain/application/use-cases/find-projects-by-id.ts'
+import { FindProjectsByIdUseCase } from '@domain/application/use-cases/projects/find-projects-by-id.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'

@@ -1,8 +1,8 @@
 import { HashService } from '@core/services/hash-service.ts'
 import { JwtService } from '@core/services/jwt-service.ts'
 import { User } from '@domain/entities/user.ts'
-import type { UsersRespository } from '../repositories/users-repository.ts'
-import type { OAuthService } from '../services/oauth-service.ts'
+import type { UsersRespository } from '../../repositories/users-repository.ts'
+import type { OAuthService } from '../../services/oauth-service.ts'
 
 interface AuthenticateWithGithubUseCaseRequest {
   code: string

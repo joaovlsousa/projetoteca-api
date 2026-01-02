@@ -3,8 +3,8 @@ import type { ProjectType } from '@core/types/project-type.ts'
 import { Description } from '@domain/entities/description.ts'
 import { Name } from '@domain/entities/name.ts'
 import { Project } from '@domain/entities/project.ts'
-import type { ProjectsRespository } from '../repositories/projects-repository.ts'
-import type { TechsRespository } from '../repositories/techs-repository.ts'
+import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
+import type { TechsRespository } from '../../repositories/techs-repository.ts'
 
 interface CreateProjectUseCaseRequest {
   name: string

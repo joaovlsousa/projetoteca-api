@@ -2,7 +2,7 @@ import {
   TOTAL_OF_PROJECTS_BY_USER,
   TOTAL_OF_STORAGE_BY_USER_IN_BYTES,
 } from '@config/constants.ts'
-import type { ProjectsRespository } from '../repositories/projects-repository.ts'
+import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
 
 interface GetProjectsMetadataByUserIdUseCaseRequest {
   userId: string

@@ -1,5 +1,5 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { GetRepositoryData } from '@domain/application/use-cases/get-repository-data.ts'
+import { GetRepositoryData } from '@domain/application/use-cases/repositories/get-repository-data.ts'
 import { DrizzleTechsRepository } from '@infra/database/drizzle/repositories/drizzle-techs-respository.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import { GithubOAuthService } from '@infra/services/github-oauth-service.ts'
