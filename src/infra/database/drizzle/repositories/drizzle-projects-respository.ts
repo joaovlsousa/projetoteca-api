@@ -1,6 +1,9 @@
-import type { ProjectsRespository } from '@domain/application/repositories/projects-repository.ts'
+import type {
+  GetMetadataByUserIdResponse,
+  ProjectsRespository,
+} from '@domain/application/repositories/projects-repository.ts'
 import type { Project } from '@domain/entities/project.ts'
-import { desc, eq, sql } from 'drizzle-orm'
+import { count, desc, eq, sql, sum } from 'drizzle-orm'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import { dbClient } from '../client.ts'
 import { DrizzleProjectsMapper } from '../mappers/drizzle-projects-mapper.ts'
@@ -44,6 +47,27 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
     return DrizzleProjectsMapper.toDomain(raw)
   }
 
+  async getMetadataByUserId(
+    userId: string
+  ): Promise<GetMetadataByUserIdResponse> {
+    const [{ countProjects, countStorageInBytes }] = await this.db
+      .select({
+        countProjects: count(),
+        countStorageInBytes: sum(projectsTable.imageSizeInBytes),
+      })
+      .from(projectsTable)
+      .where(eq(projectsTable.userId, userId))
+
+    const metadata = {
+      countProjects,
+      countStorageInBytes: Number(countStorageInBytes ?? 0),
+    }
+
+    return {
+      metadata,
+    }
+  }
+
   async findByUserId(userId: string): Promise<Project[]> {
     const raw = await this.db
       .select({
@@ -57,6 +81,7 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
           deployUrl: projectsTable.deployUrl,
           imageUrl: projectsTable.imageUrl,
           imageId: projectsTable.imageId,
+          imageSizeInBytes: projectsTable.imageSizeInBytes,
           createdAt: projectsTable.createdAt,
           updatedAt: projectsTable.updatedAt,
         },
@@ -93,6 +118,7 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
         projectsTable.deployUrl,
         projectsTable.imageUrl,
         projectsTable.imageId,
+        projectsTable.imageSizeInBytes,
         projectsTable.createdAt,
         projectsTable.updatedAt
       )

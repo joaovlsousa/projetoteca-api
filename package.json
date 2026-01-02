@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/server.ts",
-    "test": "dotenv -e .env vitest run",
+    "test": "dotenv -e .env vitest run && tsx test/functions/clear-images-in-temp-dir.ts",
     "lint": "@biomejs/biome check --write ./src",
     "db:migrate": "drizzle-kit migrate",
     "db:generate": "drizzle-kit generate",

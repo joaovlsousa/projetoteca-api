@@ -1,4 +1,7 @@
-import type { ProjectsRespository } from '@domain/application/repositories/projects-repository.ts'
+import type {
+  GetMetadataByUserIdResponse,
+  ProjectsRespository,
+} from '@domain/application/repositories/projects-repository.ts'
 import type { Project } from '@domain/entities/project.ts'
 
 export class InMemoryProjectsRepository implements ProjectsRespository {
@@ -24,6 +27,30 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
     )
 
     return projects
+  }
+
+  async getMetadataByUserId(
+    userId: string
+  ): Promise<GetMetadataByUserIdResponse> {
+    const projects = this.projects.filter(
+      (project) => project.userId.toString() === userId
+    )
+
+    const countProjects = projects.length
+    let countStorageInBytes: number = 0
+
+    for (const project of projects) {
+      countStorageInBytes += project.imageSizeInBytes ?? 0
+    }
+
+    const metadata: GetMetadataByUserIdResponse['metadata'] = {
+      countProjects,
+      countStorageInBytes,
+    }
+
+    return {
+      metadata,
+    }
   }
 
   async findById(projectId: string): Promise<Project | null> {

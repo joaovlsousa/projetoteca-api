@@ -1,0 +1,1 @@
+ALTER TABLE "projects" ADD COLUMN "image_size_in_bytes" integer;

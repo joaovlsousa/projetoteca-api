@@ -10,7 +10,7 @@ POST {{baseUrl}}/sessions/github
 Content-Type: application/json
 
 {
-  "code": "e4ed5d62a0b8fd3ec70b"
+  "code": "c4afbd15c15021cdcc5d"
 }
 
 ###
@@ -43,6 +43,12 @@ Authorization: Bearer {{token}}
 
 # @name findProjectsByUserId
 GET {{baseUrl}}/projects
+Authorization: Bearer {{token}}
+
+###
+
+# @name getProjectsMetadataByUserId
+GET {{baseUrl}}/projects/metadata
 Authorization: Bearer {{token}}
 
 ###
