@@ -1,22 +1,24 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { UpdatePublicProfileUseCase } from '@domain/application/use-cases/users/update-public-profile.ts'
+import { ConnectWithPortfolioUseCase } from '@domain/application/use-cases/users/connect-with-portfolio.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
-export const updatePublicProfileRoute: FastifyPluginAsyncZod = async (app) => {
+export const connectWithPortfolioRoute: FastifyPluginAsyncZod = async (app) => {
   app.patch(
-    '/users/profile/status',
+    '/users/portfolio/connect',
     {
       schema: {
-        summary: 'Update public profile',
+        summary: 'Connect with user portfolio',
         tags: ['Users'],
         body: z.object({
-          isPublicProfile: z.boolean(),
+          portfolioUrl: z.httpUrl(),
         }),
         response: {
-          204: z.void(),
+          201: z.object({
+            token: z.string(),
+          }),
           400: httpErrorSchema,
           401: httpErrorSchema,
           500: httpErrorSchema,
@@ -26,18 +28,20 @@ export const updatePublicProfileRoute: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const userId = request.getCurrentUserId()
-      const { isPublicProfile } = request.body
+      const { portfolioUrl } = request.body
 
-      const updatePublicProfileUseCase = new UpdatePublicProfileUseCase(
+      const connectWithPortfolioUseCase = new ConnectWithPortfolioUseCase(
         new DrizzleUsersRepository()
       )
 
-      await updatePublicProfileUseCase.execute({
+      const { token } = await connectWithPortfolioUseCase.execute({
         userId,
-        isPublicProfile,
+        portfolioUrl,
       })
 
-      return reply.status(204).send()
+      return reply.status(201).send({
+        token,
+      })
     }
   )
 }

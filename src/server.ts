@@ -3,6 +3,7 @@ import { fastifyMultipart } from '@fastify/multipart'
 import { fastifySwagger } from '@fastify/swagger'
 import { errorHandler } from '@infra/http/errors/error-handler.ts'
 import { authenticateWithGithubRoute } from '@infra/http/routes/authenticate-with-github.ts'
+import { connectWithPortfolioRoute } from '@infra/http/routes/connect-with-portfolio.ts'
 import { createProjectRoute } from '@infra/http/routes/create-project.ts'
 import { deleteProjectRoute } from '@infra/http/routes/delete-project.ts'
 import { findAllTechsRoute } from '@infra/http/routes/find-all-techs.ts'
@@ -57,6 +58,8 @@ if (env.NODE_ENV !== 'production') {
 server.register(authenticateWithGithubRoute)
 server.register(getProfileRoute)
 server.register(updatePublicProfileRoute)
+server.register(connectWithPortfolioRoute)
+
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
 server.register(findProjectsByUserIdRoute)
@@ -65,7 +68,9 @@ server.register(findProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
 server.register(uploadProjectImageRoute)
 server.register(deleteProjectRoute)
+
 server.register(findAllTechsRoute)
+
 server.register(getUserRepositoriesRoute)
 server.register(getRepositoryDataRoute)
 

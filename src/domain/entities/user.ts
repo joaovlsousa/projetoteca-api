@@ -8,6 +8,7 @@ export interface UserProps {
   githubId: number
   githubHashedAccessToken: string
   isPublicProfile: boolean
+  hashedPortfolioUrl?: string | null
   avatarUrl: string
   createdAt: Date
   updatedAt?: Date | null
@@ -50,6 +51,10 @@ export class User extends Entity<UserProps> {
     return this.props.isPublicProfile
   }
 
+  public get hashedPortfolioUrl(): string | undefined | null {
+    return this.props.hashedPortfolioUrl
+  }
+
   public get avatarUrl(): string {
     return this.props.avatarUrl
   }
@@ -68,6 +73,10 @@ export class User extends Entity<UserProps> {
 
   public set isPublicProfile(isPublicProfile: boolean) {
     this.props.isPublicProfile = isPublicProfile
+  }
+
+  public set hashedPortfolioUrl(hashedPortfolioUrl: string | null) {
+    this.props.hashedPortfolioUrl = hashedPortfolioUrl
   }
 
   public set updatedAt(updatedAt: Date) {

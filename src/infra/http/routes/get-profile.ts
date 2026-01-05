@@ -7,7 +7,7 @@ import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
 export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
-    '/profile',
+    '/users/profile',
     {
       schema: {
         summary: 'Get user profile',
