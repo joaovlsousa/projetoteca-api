@@ -2,6 +2,7 @@
 @baseUrl = http://localhost:3333
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
+@username = {{getProfile.response.body.$.user.username}}
 
 ###
 
@@ -18,6 +19,17 @@ Content-Type: application/json
 # @name getProfile
 GET {{baseUrl}}/profile
 Authorization: Bearer {{token}}
+
+###
+
+# @name updatePublicProfile
+PATCH {{baseUrl}}/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isPublicProfile": false
+}
 
 ###
 
@@ -44,6 +56,11 @@ Authorization: Bearer {{token}}
 # @name findProjectsByUserId
 GET {{baseUrl}}/projects
 Authorization: Bearer {{token}}
+
+###
+
+# @name findProjectsByUsername
+GET {{baseUrl}}/users/{{username}}/projects
 
 ###
 

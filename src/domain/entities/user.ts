@@ -7,6 +7,7 @@ export interface UserProps {
   username: string
   githubId: number
   githubHashedAccessToken: string
+  isPublicProfile: boolean
   avatarUrl: string
   createdAt: Date
   updatedAt?: Date | null
@@ -14,12 +15,13 @@ export interface UserProps {
 
 export class User extends Entity<UserProps> {
   public static create(
-    props: Optional<UserProps, 'createdAt'>,
+    props: Optional<UserProps, 'isPublicProfile' | 'createdAt'>,
     id?: UniqueEntityID
   ) {
     const user = new User(
       {
         ...props,
+        isPublicProfile: props.isPublicProfile ?? false,
         createdAt: props.createdAt ?? new Date(),
       },
       id
@@ -44,6 +46,10 @@ export class User extends Entity<UserProps> {
     return this.props.githubHashedAccessToken
   }
 
+  public get isPublicProfile(): boolean {
+    return this.props.isPublicProfile
+  }
+
   public get avatarUrl(): string {
     return this.props.avatarUrl
   }
@@ -58,6 +64,10 @@ export class User extends Entity<UserProps> {
 
   public set githubHashedAccessToken(githubHashedAccessToken: string) {
     this.props.githubHashedAccessToken = githubHashedAccessToken
+  }
+
+  public set isPublicProfile(isPublicProfile: boolean) {
+    this.props.isPublicProfile = isPublicProfile
   }
 
   public set updatedAt(updatedAt: Date) {

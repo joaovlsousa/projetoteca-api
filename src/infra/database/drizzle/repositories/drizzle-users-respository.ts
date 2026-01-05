@@ -43,6 +43,21 @@ export class DrizzleUsersRepository implements UsersRespository {
       .select()
       .from(usersTable)
       .where(eq(usersTable.id, userId))
+      .limit(1)
+
+    if (!raw) {
+      return null
+    }
+
+    return DrizzleUsersMapper.toDomain(raw)
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    const [raw] = await this.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.username, username))
+      .limit(1)
 
     if (!raw) {
       return null

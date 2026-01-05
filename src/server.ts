@@ -8,11 +8,13 @@ import { deleteProjectRoute } from '@infra/http/routes/delete-project.ts'
 import { findAllTechsRoute } from '@infra/http/routes/find-all-techs.ts'
 import { findProjectByIdRoute } from '@infra/http/routes/find-project-by-id.ts'
 import { findProjectsByUserIdRoute } from '@infra/http/routes/find-projects-by-user-id.ts'
+import { findProjectsByUsernameRoute } from '@infra/http/routes/find-projects-by-username.ts'
 import { getProfileRoute } from '@infra/http/routes/get-profile.ts'
 import { getProjectsMetadataByUserIdRoute } from '@infra/http/routes/get-projects-metadata-by-user-id.ts'
 import { getRepositoryDataRoute } from '@infra/http/routes/get-repository-data.ts'
 import { getUserRepositoriesRoute } from '@infra/http/routes/get-user-repositories.ts'
 import { updateProjectRoute } from '@infra/http/routes/update-project.ts'
+import { updatePublicProfileRoute } from '@infra/http/routes/update-public-profile.ts'
 import { uploadProjectImageRoute } from '@infra/http/routes/upload-project-image.ts'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
@@ -53,12 +55,14 @@ if (env.NODE_ENV !== 'production') {
 }
 
 server.register(authenticateWithGithubRoute)
+server.register(getProfileRoute)
+server.register(updatePublicProfileRoute)
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
 server.register(findProjectsByUserIdRoute)
+server.register(findProjectsByUsernameRoute)
 server.register(findProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
-server.register(getProfileRoute)
 server.register(uploadProjectImageRoute)
 server.register(deleteProjectRoute)
 server.register(findAllTechsRoute)

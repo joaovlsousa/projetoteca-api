@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -20,6 +21,7 @@ export const usersTable = pgTable('users', {
   githubId: integer().notNull().unique(),
   githubHashedAccessToken: text().notNull(),
   username: text().notNull().unique(),
+  isPublicProfile: boolean(),
   avatarUrl: text().notNull(),
   createdAt: timestamp().notNull(),
   updatedAt: timestamp(),
