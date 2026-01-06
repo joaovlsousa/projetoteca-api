@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "hashed_portfolio_url" text;

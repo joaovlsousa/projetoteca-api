@@ -18,10 +18,11 @@ export const projectType = pgEnum('project_type', [
 export const usersTable = pgTable('users', {
   id: text().primaryKey(),
   name: text().notNull(),
+  username: text().notNull().unique(),
   githubId: integer().notNull().unique(),
   githubHashedAccessToken: text().notNull(),
-  username: text().notNull().unique(),
   isPublicProfile: boolean(),
+  hashedPortfolioUrl: text(),
   avatarUrl: text().notNull(),
   createdAt: timestamp().notNull(),
   updatedAt: timestamp(),

@@ -6,6 +6,7 @@ import type { ProjectsRespository } from '../../repositories/projects-repository
 
 interface FindProjectsByUsernameUseCaseRequest {
   username: string
+  hashedPortfolioUrl: string | null
 }
 
 interface FindProjectsByUsernameUseCaseResponse {
@@ -20,6 +21,7 @@ export class FindProjectsByUsernameUseCase {
 
   async execute({
     username,
+    hashedPortfolioUrl,
   }: FindProjectsByUsernameUseCaseRequest): Promise<FindProjectsByUsernameUseCaseResponse> {
     const user = await this.usersRepository.findByUsername(username)
 
@@ -27,8 +29,12 @@ export class FindProjectsByUsernameUseCase {
       throw new NotFoundError('Usuário não encontrado')
     }
 
-    if (!user.isPublicProfile) {
+    if (!hashedPortfolioUrl && !user.isPublicProfile) {
       throw new ForbiddenError('Este perfil é privado')
+    }
+
+    if (hashedPortfolioUrl && user.hashedPortfolioUrl !== hashedPortfolioUrl) {
+      throw new ForbiddenError()
     }
 
     const projects = await this.projectsRepository.findByUserId(

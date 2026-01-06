@@ -1,5 +1,7 @@
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
+import { HashService } from '@core/services/hash-service.ts'
+import { faker } from '@faker-js/faker'
 import { makeProject } from '@test/factories/make-project.ts'
 import { makeUser } from '@test/factories/make-user.ts'
 import { InMemoryProjectsRepository } from '@test/repositories/in-memory-projects-repository.ts'
@@ -41,6 +43,32 @@ describe('find projects by username', () => {
 
     const { projects } = await findProjectsByUsernameUseCase.execute({
       username: user.username,
+      hashedPortfolioUrl: null,
+    })
+
+    expect(projects).toHaveLength(4)
+  })
+
+  it('should be able find projects by username with portfolio connected', async () => {
+    const user = await makeUser({
+      hashedPortfolioUrl: await HashService.hash(faker.internet.url()),
+    })
+
+    await inMemoryUsersRepository.create(user)
+
+    for (let i = 0; i < 8; i++) {
+      i % 2 === 0
+        ? await inMemoryProjectsRepository.create(
+            makeProject({
+              userId: user.id,
+            })
+          )
+        : await inMemoryProjectsRepository.create(makeProject())
+    }
+
+    const { projects } = await findProjectsByUsernameUseCase.execute({
+      username: user.username,
+      hashedPortfolioUrl: user.hashedPortfolioUrl ?? null,
     })
 
     expect(projects).toHaveLength(4)
@@ -53,6 +81,7 @@ describe('find projects by username', () => {
     expect(
       findProjectsByUsernameUseCase.execute({
         username: user.username,
+        hashedPortfolioUrl: null,
       })
     ).rejects.toThrow(ForbiddenError)
   })
@@ -61,6 +90,7 @@ describe('find projects by username', () => {
     expect(
       findProjectsByUsernameUseCase.execute({
         username: 'username',
+        hashedPortfolioUrl: null,
       })
     ).rejects.toThrow(NotFoundError)
   })

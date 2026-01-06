@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
 export const connectWithPortfolioRoute: FastifyPluginAsyncZod = async (app) => {
-  app.patch(
+  app.post(
     '/users/portfolio/connect',
     {
       schema: {

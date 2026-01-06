@@ -4,6 +4,8 @@ import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { allowAllOriginMiddleware } from '../middlewares/allow-all-origin-middleware.ts'
+import { verifyOriginMiddleware } from '../middlewares/verify-origin-middleware.ts'
 
 export const findProjectsByUsernameRoute: FastifyPluginAsyncZod = async (
   app
@@ -49,13 +51,11 @@ export const findProjectsByUsernameRoute: FastifyPluginAsyncZod = async (
           500: httpErrorSchema,
         },
       },
-      config: {
-        cors: {
-          origin: '*',
-        },
-      },
+      preHandler: [allowAllOriginMiddleware, verifyOriginMiddleware],
     },
     async (request, reply) => {
+      const hashedPortfolioUrl = await request.getPortfolioAccessToken()
+
       const { username } = request.params
 
       const findProjectsByUsernameUseCase = new FindProjectsByUsernameUseCase(
@@ -65,6 +65,7 @@ export const findProjectsByUsernameRoute: FastifyPluginAsyncZod = async (
 
       const { projects } = await findProjectsByUsernameUseCase.execute({
         username,
+        hashedPortfolioUrl,
       })
 
       return reply.status(200).send({

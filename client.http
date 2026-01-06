@@ -3,6 +3,7 @@
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
 @username = {{getProfile.response.body.$.user.username}}
+@hashedPortfolioUrl = {{connectWithPorttfolio.response.body.$.token}}
 
 ###
 
@@ -17,18 +18,29 @@ Content-Type: application/json
 ###
 
 # @name getProfile
-GET {{baseUrl}}/profile
+GET {{baseUrl}}/users/profile
 Authorization: Bearer {{token}}
 
 ###
 
 # @name updatePublicProfile
-PATCH {{baseUrl}}/profile
+PATCH {{baseUrl}}/profile/status
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "isPublicProfile": false
+}
+
+###
+
+# @name connectWithPorttfolio
+POST {{baseUrl}}/users/portfolio/connect
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "portfolioUrl": "https://joaov.vercel.app"
 }
 
 ###
@@ -61,6 +73,8 @@ Authorization: Bearer {{token}}
 
 # @name findProjectsByUsername
 GET {{baseUrl}}/users/{{username}}/projects
+# Origin: https://joaov.vercel.app
+# Authorization: Bearer {{hashedPortfolioUrl}}
 
 ###
 
