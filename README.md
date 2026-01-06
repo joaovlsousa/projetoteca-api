@@ -47,22 +47,25 @@ DDD (Domain-Driven Design):
 
 - Autenticação via GitHub OAuth. O fluxo troca o código do OAuth por dados do usuário e emite um JWT.
 - CRUD completo para projetos: criar, listar (por usuário), atualizar e deletar projetos.
-- Upload de imagens associadas a projetos (serviço de storage abstrato, com implementação no diretório `infra/services`).
-- Repositórios baseados em Drizzle para PostgreSQL; também existem implementações em memória para testes.
-- Tratamento centralizado de erros e middlewares (ex.: `auth-middleware`).
+- Rotas de listagem: `GET /projects` (projetos do usuário autenticado) e `GET /users/:username/projects` (projetos de um usuário  que possui perfil público e/ou quando o usuário conectou o seu portfólio pessoal na aplicação).
+- Upload de imagens associadas a projetos.
+- Conexão do portfólio pessoal através de um token que autoriza requisições do domínio do portfólio ao endpoint público de projetos.
+- Alternar status do perfil (público / privado).
+- Obter contagens e limites (metadados) sobre os projetos e storage (por exemplo, quantidade de projetos e total de armazenamento permitido).
 
 ## Tecnologias
 
-- Node.js + TypeScript
+- Node.js + TypeScript (Core)
 - Fastify (HTTP framework)
-- Drizzle (ORM/Query builder) + PostgreSQL
-- Vitest para testes
-- pnpm como gerenciador de pacotes
+- Drizzle (ORM/Query builder)
+- PostgreSQL (Database)
+- Vitest (Test)
+- pnpm (Package Manager)
 - Docker / docker-compose para dependências (ex.: PostgreSQL)
 
 ---
 
-## Diagrama do fluxo principal (Upload de imagem)
+## Diagrama do fluxo para upload de imagem
 
 O diagrama abaixo mostra o fluxo do caso de uso "fazer upload de imagem de um projeto". Ele segue a sequência real implementada em `src/domain/application/use-cases/upload-project-image.ts` e nas integrações em `src/infra`.
 
@@ -109,10 +112,11 @@ Observação: o Use Case (`UploadProjectImageUseCase`) orquestra as chamadas ao 
 
 - Node.js (versão LTS recomendada)
 - Docker e Docker Compose (para rodar PostgreSQL localmente)
+- pnpm - package manager (opcional)
 
 2) Variáveis de ambiente
 
-Crie um arquivo `.env` na raiz, copie e cole as variáveis do arquivo `.env.example`.
+Crie um arquivo `.env` na raiz, copie e cole as variáveis do arquivo `.env.example` e as preencha com os dados necessários.
 
 3) Subir o banco de dados localmente (Docker Compose)
 
@@ -136,16 +140,16 @@ pnpm install
 pnpm run db:migrate
 ```
 
-6) Rodar em modo de desenvolvimento
-
-```bash
-pnpm run dev
-```
-
-7) Executar testes
+6) Executar testes
 
 ```bash
 pnpm run test
+```
+
+7) Rodar em modo de desenvolvimento
+
+```bash
+pnpm run dev
 ```
 
 ---
