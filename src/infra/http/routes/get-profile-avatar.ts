@@ -5,19 +5,17 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
-export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
+export const getProfileAvatarRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
-    '/users/profile',
+    '/users/profile/avatar',
     {
       schema: {
-        summary: 'Get user profile',
+        summary: 'Get user profile avatar',
         tags: ['User'],
         response: {
           200: z.object({
             user: z.object({
-              name: z.string(),
-              username: z.string(),
-              isPublicProfile: z.boolean(),
+              avatarUrl: z.httpUrl(),
             }),
           }),
           401: httpErrorSchema,
@@ -38,9 +36,7 @@ export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
 
       return reply.status(200).send({
         user: {
-          name: user.name,
-          username: user.username,
-          isPublicProfile: user.isPublicProfile,
+          avatarUrl: user.avatarUrl,
         },
       })
     }

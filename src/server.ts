@@ -10,9 +10,12 @@ import { findAllTechsRoute } from '@infra/http/routes/find-all-techs.ts'
 import { findProjectByIdRoute } from '@infra/http/routes/find-project-by-id.ts'
 import { findProjectsByUserIdRoute } from '@infra/http/routes/find-projects-by-user-id.ts'
 import { findProjectsByUsernameRoute } from '@infra/http/routes/find-projects-by-username.ts'
+import { getPortfolioTokenRoute } from '@infra/http/routes/get-portfolio-token.ts'
 import { getProfileRoute } from '@infra/http/routes/get-profile.ts'
+import { getProfileAvatarRoute } from '@infra/http/routes/get-profile-avatar.ts'
 import { getProjectsMetadataByUserIdRoute } from '@infra/http/routes/get-projects-metadata-by-user-id.ts'
 import { getRepositoryDataRoute } from '@infra/http/routes/get-repository-data.ts'
+import { getStorageMetadataByUserIdRoute } from '@infra/http/routes/get-storage-metadata-by-user-id.ts'
 import { getUserRepositoriesRoute } from '@infra/http/routes/get-user-repositories.ts'
 import { updateProjectRoute } from '@infra/http/routes/update-project.ts'
 import { updatePublicProfileRoute } from '@infra/http/routes/update-public-profile.ts'
@@ -57,8 +60,10 @@ if (env.NODE_ENV !== 'production') {
 
 server.register(authenticateWithGithubRoute)
 server.register(getProfileRoute)
+server.register(getProfileAvatarRoute)
 server.register(updatePublicProfileRoute)
 server.register(connectWithPortfolioRoute)
+server.register(getPortfolioTokenRoute)
 
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
@@ -66,6 +71,7 @@ server.register(findProjectsByUserIdRoute)
 server.register(findProjectsByUsernameRoute)
 server.register(findProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
+server.register(getStorageMetadataByUserIdRoute)
 server.register(uploadProjectImageRoute)
 server.register(deleteProjectRoute)
 

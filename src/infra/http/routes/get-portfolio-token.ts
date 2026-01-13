@@ -5,20 +5,16 @@ import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
-export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
+export const getPortfolioTokenRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
-    '/users/profile',
+    '/users/portfolio/token',
     {
       schema: {
-        summary: 'Get user profile',
+        summary: 'Get token to connect with user portfolio',
         tags: ['User'],
         response: {
           200: z.object({
-            user: z.object({
-              name: z.string(),
-              username: z.string(),
-              isPublicProfile: z.boolean(),
-            }),
+            portfolioAccessToken: z.string().nullable(),
           }),
           401: httpErrorSchema,
           403: httpErrorSchema,
@@ -37,11 +33,7 @@ export const getProfileRoute: FastifyPluginAsyncZod = async (app) => {
       const { user } = await getProfileUseCase.execute({ userId })
 
       return reply.status(200).send({
-        user: {
-          name: user.name,
-          username: user.username,
-          isPublicProfile: user.isPublicProfile,
-        },
+        portfolioAccessToken: user.hashedPortfolioUrl ?? null,
       })
     }
   )

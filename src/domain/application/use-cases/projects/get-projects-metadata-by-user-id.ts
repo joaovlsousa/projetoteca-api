@@ -1,7 +1,4 @@
-import {
-  TOTAL_OF_PROJECTS_BY_USER,
-  TOTAL_OF_STORAGE_BY_USER_IN_BYTES,
-} from '@config/constants.ts'
+import { TOTAL_OF_PROJECTS_BY_USER } from '@config/constants.ts'
 import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
 
 interface GetProjectsMetadataByUserIdUseCaseRequest {
@@ -11,9 +8,7 @@ interface GetProjectsMetadataByUserIdUseCaseRequest {
 interface GetProjectsMetadataByUserIdUseCaseResponse {
   metadata: {
     countProjects: number
-    countStorageInBytes: number
-    totalProjects: number
-    totalStorageInBytes: number
+    totalOfProjectsByUser: number
   }
 }
 
@@ -23,14 +18,13 @@ export class GetProjectsMetadataByUserIdUseCase {
   async execute({
     userId,
   }: GetProjectsMetadataByUserIdUseCaseRequest): Promise<GetProjectsMetadataByUserIdUseCaseResponse> {
-    const { metadata } =
-      await this.projectsRepository.getMetadataByUserId(userId)
+    const countProjects =
+      await this.projectsRepository.countProjectsByUserId(userId)
 
     return {
       metadata: {
-        ...metadata,
-        totalProjects: TOTAL_OF_PROJECTS_BY_USER,
-        totalStorageInBytes: TOTAL_OF_STORAGE_BY_USER_IN_BYTES,
+        countProjects,
+        totalOfProjectsByUser: TOTAL_OF_PROJECTS_BY_USER,
       },
     }
   }

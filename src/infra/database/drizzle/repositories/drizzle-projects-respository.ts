@@ -1,7 +1,4 @@
-import type {
-  GetMetadataByUserIdResponse,
-  ProjectsRespository,
-} from '@domain/application/repositories/projects-repository.ts'
+import type { ProjectsRespository } from '@domain/application/repositories/projects-repository.ts'
 import type { Project } from '@domain/entities/project.ts'
 import { count, desc, eq, sql, sum } from 'drizzle-orm'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
@@ -47,25 +44,26 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
     return DrizzleProjectsMapper.toDomain(raw)
   }
 
-  async getMetadataByUserId(
-    userId: string
-  ): Promise<GetMetadataByUserIdResponse> {
-    const [{ countProjects, countStorageInBytes }] = await this.db
+  async countProjectsByUserId(userId: string): Promise<number> {
+    const [{ countProjects }] = await this.db
       .select({
-        countProjects: count(),
+        countProjects: count(projectsTable.id),
+      })
+      .from(projectsTable)
+      .where(eq(projectsTable.userId, userId))
+
+    return countProjects
+  }
+
+  async countStorageInBytesByUserId(userId: string): Promise<number> {
+    const [{ countStorageInBytes }] = await this.db
+      .select({
         countStorageInBytes: sum(projectsTable.imageSizeInBytes),
       })
       .from(projectsTable)
       .where(eq(projectsTable.userId, userId))
 
-    const metadata = {
-      countProjects,
-      countStorageInBytes: Number(countStorageInBytes ?? 0),
-    }
-
-    return {
-      metadata,
-    }
+    return Number(countStorageInBytes)
   }
 
   async findByUserId(userId: string): Promise<Project[]> {

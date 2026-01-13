@@ -1,24 +1,24 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { GetProjectsMetadataByUserIdUseCase } from '@domain/application/use-cases/projects/get-projects-metadata-by-user-id.ts'
+import { GetStorageMetadataByUserIdUseCase } from '@domain/application/use-cases/projects/get-storage-metadata-by-user-id.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { authMiddleware } from '../middlewares/auth-middleware.ts'
 
-export const getProjectsMetadataByUserIdRoute: FastifyPluginAsyncZod = async (
+export const getStorageMetadataByUserIdRoute: FastifyPluginAsyncZod = async (
   app
 ) => {
   app.get(
-    '/projects/metadata',
+    '/projects/storage/metadata',
     {
       schema: {
-        summary: 'Get projects metadata by user id',
+        summary: 'Get storage metadata by user id',
         tags: ['Projects'],
         response: {
           200: z.object({
             metadata: z.object({
-              countProjects: z.int().positive(),
-              totalOfProjectsByUser: z.int().positive(),
+              countStorageInBytes: z.int().positive(),
+              totalOfStorageInBytesByUser: z.int().positive(),
             }),
           }),
           401: httpErrorSchema,
@@ -30,10 +30,10 @@ export const getProjectsMetadataByUserIdRoute: FastifyPluginAsyncZod = async (
     async (request, reply) => {
       const userId = request.getCurrentUserId()
 
-      const getProjectsMetadataByUserIdUseCase =
-        new GetProjectsMetadataByUserIdUseCase(new DrizzleProjectsRepository())
+      const getStorageMetadataByUserIdUseCase =
+        new GetStorageMetadataByUserIdUseCase(new DrizzleProjectsRepository())
 
-      const { metadata } = await getProjectsMetadataByUserIdUseCase.execute({
+      const { metadata } = await getStorageMetadataByUserIdUseCase.execute({
         userId,
       })
 
