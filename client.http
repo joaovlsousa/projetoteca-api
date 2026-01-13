@@ -1,9 +1,11 @@
-# Variables
+# --- Variables ---
 @baseUrl = http://localhost:3333
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
 @username = {{getProfile.response.body.$.user.username}}
 @hashedPortfolioUrl = {{connectWithPorttfolio.response.body.$.token}}
+
+# --- User routes ---
 
 ###
 
@@ -12,13 +14,19 @@ POST {{baseUrl}}/sessions/github
 Content-Type: application/json
 
 {
-  "code": "c4afbd15c15021cdcc5d"
+  "code": "075c21597df1c6a1610f"
 }
 
 ###
 
 # @name getProfile
 GET {{baseUrl}}/users/profile
+Authorization: Bearer {{token}}
+
+###
+
+# @name getProfileAvatar
+GET {{baseUrl}}/users/profile/avatar
 Authorization: Bearer {{token}}
 
 ###
@@ -42,6 +50,14 @@ Content-Type: application/json
 {
   "portfolioUrl": "https://joaov.vercel.app"
 }
+
+###
+
+# @name getPortfolioToken
+GET {{baseUrl}}/users/portfolio/token
+Authorization: Bearer {{token}}
+
+# --- Projects routes ---
 
 ###
 
@@ -84,6 +100,12 @@ Authorization: Bearer {{token}}
 
 ###
 
+# @name getStorageMetadataByUserId
+GET {{baseUrl}}/projects/storage/metadata
+Authorization: Bearer {{token}}
+
+###
+
 # @name findProjectById
 GET {{baseUrl}}/projects/{{projectId}}
 Authorization: Bearer {{token}}
@@ -113,10 +135,14 @@ Authorization: Bearer {{token}}
 DELETE {{baseUrl}}/projects/{{projectId}}
 Authorization: Bearer {{token}}
 
+# --- Techs routes ---
+
 ###
 
 # @name findAllTechs
 GET {{baseUrl}}/techs
+
+# --- Repositories routes ---
 
 ###
 

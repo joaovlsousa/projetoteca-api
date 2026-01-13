@@ -14,9 +14,7 @@ export const getProfileAvatarRoute: FastifyPluginAsyncZod = async (app) => {
         tags: ['User'],
         response: {
           200: z.object({
-            user: z.object({
-              avatarUrl: z.httpUrl(),
-            }),
+            avatarUrl: z.httpUrl(),
           }),
           401: httpErrorSchema,
           403: httpErrorSchema,
@@ -35,9 +33,7 @@ export const getProfileAvatarRoute: FastifyPluginAsyncZod = async (app) => {
       const { user } = await getProfileUseCase.execute({ userId })
 
       return reply.status(200).send({
-        user: {
-          avatarUrl: user.avatarUrl,
-        },
+        avatarUrl: user.avatarUrl,
       })
     }
   )
