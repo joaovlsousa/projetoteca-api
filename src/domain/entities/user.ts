@@ -6,9 +6,9 @@ export interface UserProps {
   name: string
   username: string
   githubId: number
-  githubHashedAccessToken: string
+  githubAccessTokenHash: string
   isPublicProfile: boolean
-  hashedPortfolioUrl?: string | null
+  apiKeyHash?: string | null
   avatarUrl: string
   createdAt: Date
   updatedAt?: Date | null
@@ -43,16 +43,16 @@ export class User extends Entity<UserProps> {
     return this.props.username
   }
 
-  public get githubHashedAccessToken(): string {
-    return this.props.githubHashedAccessToken
+  public get githubAccessTokenHash(): string {
+    return this.props.githubAccessTokenHash
   }
 
   public get isPublicProfile(): boolean {
     return this.props.isPublicProfile
   }
 
-  public get hashedPortfolioUrl(): string | undefined | null {
-    return this.props.hashedPortfolioUrl
+  public get apiKeyHash(): string | undefined | null {
+    return this.props.apiKeyHash
   }
 
   public get avatarUrl(): string {
@@ -67,16 +67,16 @@ export class User extends Entity<UserProps> {
     return this.props.updatedAt
   }
 
-  public set githubHashedAccessToken(githubHashedAccessToken: string) {
-    this.props.githubHashedAccessToken = githubHashedAccessToken
+  public set githubAccessTokenHash(githubAccessTokenHash: string) {
+    this.props.githubAccessTokenHash = githubAccessTokenHash
   }
 
   public set isPublicProfile(isPublicProfile: boolean) {
     this.props.isPublicProfile = isPublicProfile
   }
 
-  public set hashedPortfolioUrl(hashedPortfolioUrl: string | null) {
-    this.props.hashedPortfolioUrl = hashedPortfolioUrl
+  public set apiKeyHash(apiKeyHash: string | null) {
+    this.props.apiKeyHash = apiKeyHash
   }
 
   public set updatedAt(updatedAt: Date) {

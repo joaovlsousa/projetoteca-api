@@ -9,7 +9,7 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
   }
 
   async save(project: Project): Promise<void> {
-    const projectIndex = this.projects.findIndex((project) =>
+    const projectIndex = this.projects.getIndex((project) =>
       project.id.equals(project.id)
     )
 
@@ -18,7 +18,7 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
     }
   }
 
-  async findByUserId(userId: string): Promise<Project[]> {
+  async getByUserId(userId: string): Promise<Project[]> {
     const projects = this.projects.filter(
       (project) => project.userId.toString() === userId
     )
@@ -48,8 +48,8 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
     return countStorageInBytes
   }
 
-  async findById(projectId: string): Promise<Project | null> {
-    const project = this.projects.find(
+  async getById(projectId: string): Promise<Project | null> {
+    const project = this.projects.get(
       (project) => project.id.toString() === projectId
     )
 

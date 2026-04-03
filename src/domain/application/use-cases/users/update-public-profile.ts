@@ -13,7 +13,7 @@ export class UpdatePublicProfileUseCase {
     userId,
     isPublicProfile,
   }: UpdatePublicProfileUseCaseRequest): Promise<void> {
-    const user = await this.usersRepository.findById(userId)
+    const user = await this.usersRepository.getById(userId)
 
     if (!user) {
       throw new UnauthorizedError()

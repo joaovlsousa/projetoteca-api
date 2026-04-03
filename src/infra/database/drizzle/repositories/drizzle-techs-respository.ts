@@ -13,7 +13,7 @@ export class DrizzleTechsRepository implements TechsRespository {
     this.db = dbClient
   }
 
-  async findAll(): Promise<Tech[]> {
+  async getAll(): Promise<Tech[]> {
     const raw = await this.db
       .select()
       .from(techsTable)
@@ -22,7 +22,7 @@ export class DrizzleTechsRepository implements TechsRespository {
     return raw.map(DrizzleTechsMapper.toDomain)
   }
 
-  async findManyByIdList(techsIds: string[]): Promise<Tech[]> {
+  async getManyByIdList(techsIds: string[]): Promise<Tech[]> {
     const raw = await this.db
       .select()
       .from(techsTable)
@@ -32,7 +32,7 @@ export class DrizzleTechsRepository implements TechsRespository {
     return raw.map(DrizzleTechsMapper.toDomain)
   }
 
-  async findOneByName(name: string): Promise<Tech | null> {
+  async getOneByName(name: string): Promise<Tech | null> {
     const [raw] = await this.db
       .select()
       .from(techsTable)

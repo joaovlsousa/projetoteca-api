@@ -38,7 +38,7 @@ export class UpdateProjectUseCase {
     githubUrl,
     deployUrl,
   }: UpdateProjectUseCaseRequest): Promise<UpdateProjectUseCaseResponse> {
-    const project = await this.projectsRepository.findById(projectId)
+    const project = await this.projectsRepository.getById(projectId)
 
     if (!project) {
       throw new NotFoundError('Projeto não encontrado')
@@ -48,7 +48,7 @@ export class UpdateProjectUseCase {
       throw new ForbiddenError()
     }
 
-    const techs = await this.techsRespository.findManyByIdList(techsIds)
+    const techs = await this.techsRespository.getManyByIdList(techsIds)
 
     project.name = new Name(name)
     project.description = new Description(description)

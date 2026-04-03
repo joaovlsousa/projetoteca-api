@@ -8,7 +8,7 @@ export class InMemoryTechsRepository implements TechsRespository {
     this.techs = [tech, ...this.techs]
   }
 
-  async findManyByIdList(techsIds: string[]): Promise<Tech[]> {
+  async getManyByIdList(techsIds: string[]): Promise<Tech[]> {
     const techs = this.techs.filter((tech) =>
       techsIds.includes(tech.id.toString())
     )
@@ -16,12 +16,12 @@ export class InMemoryTechsRepository implements TechsRespository {
     return techs
   }
 
-  async findAll(): Promise<Tech[]> {
+  async getAll(): Promise<Tech[]> {
     return this.techs
   }
 
-  async findOneByName(name: string): Promise<Tech | null> {
-    const tech = this.techs.find((tech) => tech.name === name)
+  async getOneByName(name: string): Promise<Tech | null> {
+    const tech = this.techs.get((tech) => tech.name === name)
 
     if (!tech) {
       return null

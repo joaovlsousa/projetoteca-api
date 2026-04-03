@@ -31,14 +31,14 @@ export class GetRepositoryData {
     userId,
     repositorySlug,
   }: GetRepositoryDataRequest): Promise<GetRepositoryDataResponse> {
-    const user = await this.usersRespository.findById(userId)
+    const user = await this.usersRespository.getById(userId)
 
     if (!user) {
       throw new UnauthorizedError()
     }
 
     const githubAccessToken = await HashService.decode(
-      user.githubHashedAccessToken
+      user.githubAccessTokenHash
     )
 
     const { repository: githubRepository } =
@@ -48,7 +48,7 @@ export class GetRepositoryData {
         repository: repositorySlug,
       })
 
-    const tech = await this.techsRespository.findOneByName(
+    const tech = await this.techsRespository.getOneByName(
       githubRepository.language.toUpperCase()
     )
 

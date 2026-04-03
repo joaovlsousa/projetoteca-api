@@ -2,24 +2,22 @@ import { fastifyCors } from '@fastify/cors'
 import { fastifyMultipart } from '@fastify/multipart'
 import { fastifySwagger } from '@fastify/swagger'
 import { errorHandler } from '@infra/http/errors/error-handler.ts'
-import { authenticateWithGithubRoute } from '@infra/http/routes/authenticate-with-github.ts'
-import { connectWithPortfolioRoute } from '@infra/http/routes/connect-with-portfolio.ts'
-import { createProjectRoute } from '@infra/http/routes/create-project.ts'
-import { deleteProjectRoute } from '@infra/http/routes/delete-project.ts'
-import { findAllTechsRoute } from '@infra/http/routes/find-all-techs.ts'
-import { findProjectByIdRoute } from '@infra/http/routes/find-project-by-id.ts'
-import { findProjectsByUserIdRoute } from '@infra/http/routes/find-projects-by-user-id.ts'
-import { findProjectsByUsernameRoute } from '@infra/http/routes/find-projects-by-username.ts'
-import { getPortfolioTokenRoute } from '@infra/http/routes/get-portfolio-token.ts'
-import { getProfileRoute } from '@infra/http/routes/get-profile.ts'
-import { getProfileAvatarRoute } from '@infra/http/routes/get-profile-avatar.ts'
-import { getProjectsMetadataByUserIdRoute } from '@infra/http/routes/get-projects-metadata-by-user-id.ts'
-import { getRepositoryDataRoute } from '@infra/http/routes/get-repository-data.ts'
-import { getStorageMetadataByUserIdRoute } from '@infra/http/routes/get-storage-metadata-by-user-id.ts'
-import { getUserRepositoriesRoute } from '@infra/http/routes/get-user-repositories.ts'
-import { updateProjectRoute } from '@infra/http/routes/update-project.ts'
-import { updatePublicProfileRoute } from '@infra/http/routes/update-public-profile.ts'
-import { uploadProjectImageRoute } from '@infra/http/routes/upload-project-image.ts'
+import { authenticateWithGithubRoute } from '@infra/http/routes/auth/authenticate-with-github.ts'
+import { createProjectRoute } from '@infra/http/routes/projects/create-project.ts'
+import { deleteProjectRoute } from '@infra/http/routes/projects/delete-project.ts'
+import { getProjectByIdRoute } from '@infra/http/routes/projects/get-project-by-id.ts'
+import { getProjectsByUserIdRoute } from '@infra/http/routes/projects/get-projects-by-user-id.ts'
+import { getProjectsByUsernameRoute } from '@infra/http/routes/projects/get-projects-by-username.ts'
+import { getProjectsMetadataByUserIdRoute } from '@infra/http/routes/projects/get-projects-metadata-by-user-id.ts'
+import { getStorageMetadataByUserIdRoute } from '@infra/http/routes/projects/get-storage-metadata-by-user-id.ts'
+import { updateProjectRoute } from '@infra/http/routes/projects/update-project.ts'
+import { uploadProjectImageRoute } from '@infra/http/routes/projects/upload-project-image.ts'
+import { getRepositoryDataRoute } from '@infra/http/routes/repositories/get-repository-data.ts'
+import { getAllTechsRoute } from '@infra/http/routes/techs/get-all-techs.ts'
+import { generateApiKeyRoute } from '@infra/http/routes/users/generate-api-key.ts'
+import { getApiKeyRoute } from '@infra/http/routes/users/get-api-key.ts'
+import { getProfileRoute } from '@infra/http/routes/users/get-profile.ts'
+import { updateProfileStatusRoute } from '@infra/http/routes/users/update-profile-status.ts'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
 import {
@@ -60,24 +58,22 @@ if (env.NODE_ENV !== 'production') {
 
 server.register(authenticateWithGithubRoute)
 server.register(getProfileRoute)
-server.register(getProfileAvatarRoute)
-server.register(updatePublicProfileRoute)
-server.register(connectWithPortfolioRoute)
-server.register(getPortfolioTokenRoute)
+server.register(updateProfileStatusRoute)
+server.register(generateApiKeyRoute)
+server.register(getApiKeyRoute)
 
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
-server.register(findProjectsByUserIdRoute)
-server.register(findProjectsByUsernameRoute)
-server.register(findProjectByIdRoute)
+server.register(getProjectsByUserIdRoute)
+server.register(getProjectsByUsernameRoute)
+server.register(getProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
 server.register(getStorageMetadataByUserIdRoute)
 server.register(uploadProjectImageRoute)
 server.register(deleteProjectRoute)
 
-server.register(findAllTechsRoute)
+server.register(getAllTechsRoute)
 
-server.register(getUserRepositoriesRoute)
 server.register(getRepositoryDataRoute)
 
 server

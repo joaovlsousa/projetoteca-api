@@ -18,7 +18,7 @@ export class DeleteProjectUseCase {
     projectId,
     userId,
   }: DeleteProjectUseCaseRequest): Promise<void> {
-    const project = await this.projectsRepository.findById(projectId)
+    const project = await this.projectsRepository.getById(projectId)
 
     if (!project) {
       throw new NotFoundError('Projeto não encontrado')

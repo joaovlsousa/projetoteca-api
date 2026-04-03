@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 interface JwtPayload {
   sub: string
+  username: string
 }
 
 export class JwtService {

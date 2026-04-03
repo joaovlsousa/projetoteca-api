@@ -9,27 +9,27 @@ export class InMemoryUsersRepository implements UsersRespository {
   }
 
   async save(user: User): Promise<void> {
-    const userIndex = this.users.findIndex((user) => user.id.equals(user.id))
+    const userIndex = this.users.getIndex((user) => user.id.equals(user.id))
 
     if (userIndex >= 0) {
       this.users[userIndex] = user
     }
   }
 
-  async findByGithubId(githubId: number): Promise<User | null> {
-    const user = this.users.find((user) => user.githubId === githubId)
+  async getByGithubId(githubId: number): Promise<User | null> {
+    const user = this.users.get((user) => user.githubId === githubId)
 
     return user ?? null
   }
 
-  async findById(userId: string): Promise<User | null> {
-    const user = this.users.find((user) => user.id.toString() === userId)
+  async getById(userId: string): Promise<User | null> {
+    const user = this.users.get((user) => user.id.toString() === userId)
 
     return user ?? null
   }
 
-  async findByUsername(username: string): Promise<User | null> {
-    const user = this.users.find((user) => user.username === username)
+  async getByUsername(username: string): Promise<User | null> {
+    const user = this.users.get((user) => user.username === username)
 
     return user ?? null
   }

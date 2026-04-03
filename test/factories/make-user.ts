@@ -11,7 +11,7 @@ export async function makeUser(
     {
       name: faker.person.fullName(),
       githubId: faker.number.int(),
-      githubHashedAccessToken: await HashService.hash(faker.string.uuid()),
+      githubAccessTokenHash: await HashService.hash(faker.string.uuid()),
       username: faker.internet.username(),
       avatarUrl: faker.image.avatarGitHub(),
       ...override,

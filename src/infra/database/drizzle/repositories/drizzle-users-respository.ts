@@ -25,7 +25,7 @@ export class DrizzleUsersRepository implements UsersRespository {
     await this.db.update(usersTable).set(raw).where(eq(usersTable.id, raw.id))
   }
 
-  async findByGithubId(githubId: number): Promise<User | null> {
+  async getByGithubId(githubId: number): Promise<User | null> {
     const [raw] = await this.db
       .select()
       .from(usersTable)
@@ -38,7 +38,7 @@ export class DrizzleUsersRepository implements UsersRespository {
     return DrizzleUsersMapper.toDomain(raw)
   }
 
-  async findById(userId: string): Promise<User | null> {
+  async getById(userId: string): Promise<User | null> {
     const [raw] = await this.db
       .select()
       .from(usersTable)
@@ -52,7 +52,7 @@ export class DrizzleUsersRepository implements UsersRespository {
     return DrizzleUsersMapper.toDomain(raw)
   }
 
-  async findByUsername(username: string): Promise<User | null> {
+  async getByUsername(username: string): Promise<User | null> {
     const [raw] = await this.db
       .select()
       .from(usersTable)

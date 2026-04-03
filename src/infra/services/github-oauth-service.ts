@@ -5,7 +5,6 @@ import type {
   GetRepositoryDataRequest,
   GetRepositoryDataResponse,
   GetUserDataResponse,
-  GetUserRepositoriesResponse,
   OAuthService,
 } from '@domain/application/services/oauth-service.ts'
 import { z } from 'zod'
@@ -76,38 +75,6 @@ export class GithubOAuthService implements OAuthService {
       githubId,
       username,
       avatarUrl,
-    }
-  }
-
-  async getUserRepositories(
-    accessToken: string
-  ): Promise<GetUserRepositoriesResponse> {
-    const githubUserRepositoriesResponse = await fetch(
-      `${GITHUB_API_URL}/user/repos`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: 'application/json',
-        },
-      }
-    )
-
-    if (!githubUserRepositoriesResponse.ok) {
-      throw new BadGatewayError('Não foi possível buscar os repositórios')
-    }
-
-    const githubUserRepositories = await githubUserRepositoriesResponse.json()
-
-    const repositories = z
-      .array(
-        z.object({
-          name: z.string(),
-        })
-      )
-      .parse(githubUserRepositories)
-
-    return {
-      repositories: repositories.map((repository) => repository.name),
     }
   }
 

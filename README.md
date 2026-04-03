@@ -83,7 +83,7 @@ sequenceDiagram
   API->>Auth: validar JWT
   Auth-->>API: userId
   API->>UC: execute({ projectId, userId, image })
-  UC->>Repo: findById(projectId)
+  UC->>Repo: getById(projectId)
   Repo->>DB: SELECT * FROM projects WHERE id = projectId
   DB-->>Repo: project row
   Repo-->>UC: project

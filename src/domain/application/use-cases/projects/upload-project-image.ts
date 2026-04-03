@@ -24,7 +24,7 @@ export class UploadProjectImageUseCase {
   }: UploadProjectImageUseCaseRequest): Promise<void> {
     validateImage(image)
 
-    const project = await this.projectsRepository.findById(projectId)
+    const project = await this.projectsRepository.getById(projectId)
 
     if (!project) {
       throw new NotFoundError('Projeto não encontrado')

@@ -13,7 +13,7 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
     this.db = dbClient
   }
 
-  async findById(projectId: string): Promise<Project | null> {
+  async getById(projectId: string): Promise<Project | null> {
     const [rawProject] = await this.db
       .select()
       .from(projectsTable)
@@ -66,7 +66,7 @@ export class DrizzleProjectsRepository implements ProjectsRespository {
     return Number(countStorageInBytes)
   }
 
-  async findByUserId(userId: string): Promise<Project[]> {
+  async getByUserId(userId: string): Promise<Project[]> {
     const raw = await this.db
       .select({
         rawProject: {

@@ -16,7 +16,7 @@ export class GetProfileUseCase {
   async execute({
     userId,
   }: GetProfileUseCaseRequest): Promise<GetProfileUseCaseResponse> {
-    const user = await this.usersRepository.findById(userId)
+    const user = await this.usersRepository.getById(userId)
 
     if (!user) {
       throw new UnauthorizedError()

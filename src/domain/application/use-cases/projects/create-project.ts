@@ -35,7 +35,7 @@ export class CreateProjectUseCase {
     githubUrl,
     deployUrl,
   }: CreateProjectUseCaseRequest): Promise<CreateProjectUseCaseResponse> {
-    const techs = await this.techsRespository.findManyByIdList(techsIds)
+    const techs = await this.techsRespository.getManyByIdList(techsIds)
 
     const project = Project.create({
       name: new Name(name),
