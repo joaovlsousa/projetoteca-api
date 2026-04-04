@@ -1,4 +1,6 @@
+import { MAX_NUMBER_OF_PROJECTS_BY_USER } from '@core/constants.ts'
 import { UniqueEntityID } from '@core/entities/unique-entity-id.ts'
+import { UnprocessableEntityError } from '@core/errors/unprocessable-entity-error.ts'
 import type { ProjectType } from '@core/types/project-type.ts'
 import { Description } from '@domain/entities/description.ts'
 import { Name } from '@domain/entities/name.ts'
@@ -35,6 +37,15 @@ export class CreateProjectUseCase {
     githubUrl,
     deployUrl,
   }: CreateProjectUseCaseRequest): Promise<CreateProjectUseCaseResponse> {
+    const totalProjects =
+      await this.projectsRepository.countProjectsByUserId(userId)
+
+    if (totalProjects >= MAX_NUMBER_OF_PROJECTS_BY_USER) {
+      throw new UnprocessableEntityError(
+        `Você atingiu o limite máximo de ${MAX_NUMBER_OF_PROJECTS_BY_USER} projetos.`
+      )
+    }
+
     const techs = await this.techsRespository.getManyByIdList(techsIds)
 
     const project = Project.create({

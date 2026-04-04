@@ -8,13 +8,13 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
     this.projects = [project, ...this.projects]
   }
 
-  async save(project: Project): Promise<void> {
-    const projectIndex = this.projects.getIndex((project) =>
-      project.id.equals(project.id)
+  async save(projectToSave: Project): Promise<void> {
+    const projectIndex = this.projects.findIndex((project) =>
+      project.id.equals(projectToSave.id)
     )
 
     if (projectIndex >= 0) {
-      this.projects[projectIndex] = project
+      this.projects[projectIndex] = projectToSave
     }
   }
 
@@ -49,7 +49,7 @@ export class InMemoryProjectsRepository implements ProjectsRespository {
   }
 
   async getById(projectId: string): Promise<Project | null> {
-    const project = this.projects.get(
+    const project = this.projects.find(
       (project) => project.id.toString() === projectId
     )
 

@@ -1,5 +1,7 @@
+import { MAX_STORAGE_LIMIT_IN_BYTES_BY_USER } from '@core/constants.ts'
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
+import { PayloadTooLargeError } from '@core/errors/payload-too-large-error.ts'
 import { validateImage } from '@core/functions/validate-image.ts'
 import type { ImageFile } from '@core/types/image.ts'
 import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
@@ -36,6 +38,20 @@ export class UploadProjectImageUseCase {
 
     if (project.imageId) {
       await this.storageService.delete(project.imageId)
+    }
+
+    const countStorageInBytes =
+      await this.projectsRepository.countStorageInBytesByUserId(userId)
+    const totalStorageInBytes = countStorageInBytes + image.size
+
+    if (totalStorageInBytes > MAX_STORAGE_LIMIT_IN_BYTES_BY_USER) {
+      const oneMegabyte = 1024 * 1024
+      const maxStorageLimitInMegabytesByUser =
+        MAX_STORAGE_LIMIT_IN_BYTES_BY_USER / oneMegabyte
+
+      throw new PayloadTooLargeError(
+        `Você excedeu o limite de armazenamento de ${maxStorageLimitInMegabytesByUser}MB.`
+      )
     }
 
     const { imageId, imageUrl } = await this.storageService.upload(image)

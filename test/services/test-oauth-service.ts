@@ -2,7 +2,6 @@ import type {
   GetRepositoryDataRequest,
   GetRepositoryDataResponse,
   GetUserDataResponse,
-  GetUserRepositoriesResponse,
   OAuthService,
 } from '@domain/application/services/oauth-service.ts'
 import { faker } from '@faker-js/faker'
@@ -18,14 +17,6 @@ export class TestOAuthService implements OAuthService {
       githubId: 1234,
       username: faker.internet.username(),
       avatarUrl: faker.image.avatarGitHub(),
-    }
-  }
-
-  async getUserRepositories(
-    _accessToken: string
-  ): Promise<GetUserRepositoriesResponse> {
-    return {
-      repositories: Array.from({ length: 5 }).map(() => faker.lorem.slug()),
     }
   }
 

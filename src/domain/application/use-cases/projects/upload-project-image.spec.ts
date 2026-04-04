@@ -1,6 +1,6 @@
-import { BadRequestError } from '@core/errors/bad-request-error.ts'
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
 import { NotFoundError } from '@core/errors/not-found-error.ts'
+import { PayloadTooLargeError } from '@core/errors/payload-too-large-error.ts'
 import type { ImageFile } from '@core/types/image.ts'
 import { makeImageFile } from '@test/factories/make-image-file.ts'
 import { makeProject } from '@test/factories/make-project.ts'
@@ -39,7 +39,7 @@ describe('upload project image', async () => {
     )
   })
 
-  it('should be able to remove an image', async () => {
+  it('should be able to replace an image', async () => {
     const project = makeProject()
     await inMemoryProjectsRepository.create(project)
 
@@ -83,6 +83,39 @@ describe('upload project image', async () => {
     ).rejects.toThrow(ForbiddenError)
   })
 
+  it('should not be able to upload an image if overflow storage limit by user', async () => {
+    const project1 = makeProject()
+    const project2 = makeProject()
+    const project3 = makeProject()
+
+    await inMemoryProjectsRepository.create(project1)
+    await inMemoryProjectsRepository.create(project2)
+    await inMemoryProjectsRepository.create(project3)
+
+    const largeImageToUpload = imageToUpload
+    largeImageToUpload.size = 1024 * 1024 // 1MB
+
+    await uploadProjectImageUseCase.execute({
+      image: largeImageToUpload,
+      projectId: project1.id.toString(),
+      userId: 'user-id',
+    })
+
+    await uploadProjectImageUseCase.execute({
+      image: imageToUpload,
+      projectId: project2.id.toString(),
+      userId: 'user-id',
+    })
+
+    await expect(
+      uploadProjectImageUseCase.execute({
+        image: imageToUpload,
+        projectId: project3.id.toString(),
+        userId: 'user-id',
+      })
+    ).rejects.toThrow(PayloadTooLargeError)
+  })
+
   it('should not be able to upload an image due to its size', async () => {
     const invalidImageToUpload = imageToUpload
     invalidImageToUpload.size = 6 * 1024 * 1024 // 6MB
@@ -93,6 +126,6 @@ describe('upload project image', async () => {
         projectId: 'project-1',
         userId: 'user-1',
       })
-    ).rejects.toThrow(BadRequestError)
+    ).rejects.toThrow(PayloadTooLargeError)
   })
 })

@@ -14,6 +14,7 @@ export function makeProject(
       description: new Description(faker.lorem.sentence(2)),
       githubUrl: faker.internet.url(),
       type: 'fullstack',
+      techs: [],
       userId: new UniqueEntityID('user-id'),
       ...override,
     },

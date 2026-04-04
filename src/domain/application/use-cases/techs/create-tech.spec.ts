@@ -1,4 +1,4 @@
-import { BadRequestError } from '@core/errors/bad-request-error.ts'
+import { PayloadTooLargeError } from '@core/errors/payload-too-large-error.ts'
 import type { ImageFile } from '@core/types/image.ts'
 import { makeImageFile } from '@test/factories/make-image-file.ts'
 import { InMemoryTechsRepository } from '@test/repositories/in-memory-techs-repository.ts'
@@ -39,6 +39,6 @@ describe('create tech', async () => {
         image: invalidImageToUpload,
         name: 'tech',
       })
-    ).rejects.toThrow(BadRequestError)
+    ).rejects.toThrow(PayloadTooLargeError)
   })
 })

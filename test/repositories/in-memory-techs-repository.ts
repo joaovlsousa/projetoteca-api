@@ -21,7 +21,7 @@ export class InMemoryTechsRepository implements TechsRespository {
   }
 
   async getOneByName(name: string): Promise<Tech | null> {
-    const tech = this.techs.get((tech) => tech.name === name)
+    const tech = this.techs.find((tech) => tech.name === name)
 
     if (!tech) {
       return null
