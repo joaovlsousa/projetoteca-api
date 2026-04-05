@@ -25,7 +25,13 @@ Authorization: Bearer {{token}}
 
 ###
 
-# @name updatePublicProfile
+# @name getProfileStatus
+GET {{baseUrl}}/users/profile/status
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateProfileStatus
 PATCH {{baseUrl}}/users/profile/status
 Authorization: Bearer {{token}}
 Content-Type: application/json

@@ -17,6 +17,7 @@ import { getAllTechsRoute } from '@infra/http/routes/techs/get-all-techs.ts'
 import { generateApiKeyRoute } from '@infra/http/routes/users/generate-api-key.ts'
 import { getApiKeyRoute } from '@infra/http/routes/users/get-api-key.ts'
 import { getProfileRoute } from '@infra/http/routes/users/get-profile.ts'
+import { getProfileStatusRoute } from '@infra/http/routes/users/get-profile-status.ts'
 import { updateProfileStatusRoute } from '@infra/http/routes/users/update-profile-status.ts'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
@@ -58,6 +59,7 @@ if (env.NODE_ENV !== 'production') {
 
 server.register(authenticateWithGithubRoute)
 server.register(getProfileRoute)
+server.register(getProfileStatusRoute)
 server.register(updateProfileStatusRoute)
 server.register(generateApiKeyRoute)
 server.register(getApiKeyRoute)
