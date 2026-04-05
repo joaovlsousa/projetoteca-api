@@ -16,7 +16,7 @@ interface GetRepositoryDataResponse {
     description: string | null
     homepageUrl: string | null
     githubUrl: string
-    techId: string | null
+    techIds: string[]
   }
 }
 
@@ -48,9 +48,10 @@ export class GetRepositoryData {
         repository: repositorySlug,
       })
 
-    const tech = await this.techsRespository.getOneByName(
-      githubRepository.language.toUpperCase()
-    )
+    const techs = await this.techsRespository.getManyByIdList([
+      'GIT',
+      githubRepository.language.toUpperCase(),
+    ])
 
     const repositoryName = formatRepoName(repositorySlug)
 
@@ -60,7 +61,7 @@ export class GetRepositoryData {
         description: githubRepository.description,
         homepageUrl: githubRepository.homepageUrl,
         githubUrl: githubRepository.githubUrl,
-        techId: tech?.id.toString() ?? null,
+        techIds: techs.map((tech) => tech.id.toString()),
       },
     }
   }

@@ -24,7 +24,7 @@ export const getRepositoryDataRoute: FastifyPluginAsyncZod = async (app) => {
               description: z.string().nullable(),
               homepageUrl: z.httpUrl().nullable(),
               githubUrl: z.httpUrl(),
-              techId: z.string().nullable(),
+              techIds: z.string().array(),
             }),
           }),
           401: httpErrorSchema,
