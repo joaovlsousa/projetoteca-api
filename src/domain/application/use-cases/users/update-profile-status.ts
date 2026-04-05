@@ -1,18 +1,18 @@
 import { UnauthorizedError } from '@core/errors/unauthorized-error.ts'
 import type { UsersRespository } from '../../repositories/users-repository.ts'
 
-interface UpdatePublicProfileUseCaseRequest {
+interface UpdateProfileStatusUseCaseRequest {
   userId: string
   isPublicProfile: boolean
 }
 
-export class UpdatePublicProfileUseCase {
+export class UpdateProfileStatusUseCase {
   public constructor(private usersRepository: UsersRespository) {}
 
   async execute({
     userId,
     isPublicProfile,
-  }: UpdatePublicProfileUseCaseRequest): Promise<void> {
+  }: UpdateProfileStatusUseCaseRequest): Promise<void> {
     const user = await this.usersRepository.getById(userId)
 
     if (!user) {

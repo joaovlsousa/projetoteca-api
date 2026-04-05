@@ -1,5 +1,5 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { UpdatePublicProfileUseCase } from '@domain/application/use-cases/users/update-public-profile.ts'
+import { UpdateProfileStatusUseCase } from '@domain/application/use-cases/users/update-profile-status.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
@@ -28,11 +28,11 @@ export const updateProfileStatusRoute: FastifyPluginAsyncZod = async (app) => {
       const userId = request.getCurrentUserId()
       const { isPublicProfile } = request.body
 
-      const updatePublicProfileUseCase = new UpdatePublicProfileUseCase(
+      const updateProfileStatusUseCase = new UpdateProfileStatusUseCase(
         new DrizzleUsersRepository()
       )
 
-      await updatePublicProfileUseCase.execute({
+      await updateProfileStatusUseCase.execute({
         userId,
         isPublicProfile,
       })
