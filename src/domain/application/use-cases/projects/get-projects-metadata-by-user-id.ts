@@ -1,4 +1,4 @@
-import { TOTAL_OF_PROJECTS_BY_USER } from '@config/constants.ts'
+import { MAX_NUMBER_OF_PROJECTS_BY_USER } from '@core/constants.ts'
 import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
 
 interface GetProjectsMetadataByUserIdUseCaseRequest {
@@ -24,7 +24,7 @@ export class GetProjectsMetadataByUserIdUseCase {
     return {
       metadata: {
         countProjects,
-        totalOfProjectsByUser: TOTAL_OF_PROJECTS_BY_USER,
+        totalOfProjectsByUser: MAX_NUMBER_OF_PROJECTS_BY_USER,
       },
     }
   }

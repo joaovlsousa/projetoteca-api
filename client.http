@@ -3,7 +3,7 @@
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
 @username = {{getProfile.response.body.$.user.username}}
-@apiKey = {{generateApiKey.response.body.$.token}}
+@apiKey = {{generateApiKey.response.body.$.apiKey}}
 
 # --- User routes ---
 
@@ -14,7 +14,7 @@ POST {{baseUrl}}/sessions/github
 Content-Type: application/json
 
 {
-  "code": "1b3edbc694c5212775f9"
+  "code": "03ade1d138c8adff932d"
 }
 
 ###
@@ -26,7 +26,7 @@ Authorization: Bearer {{token}}
 ###
 
 # @name updatePublicProfile
-PATCH {{baseUrl}}/profile/status
+PATCH {{baseUrl}}/users/profile/status
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -73,12 +73,6 @@ Authorization: Bearer {{token}}
 # @name getProjectsByUserId
 GET {{baseUrl}}/projects
 Authorization: Bearer {{token}}
-
-###
-
-# @name getProjectsByUsername
-GET {{baseUrl}}/users/{{username}}/projects
-Authorization: {{apiKey}}
 
 ###
 
@@ -137,3 +131,10 @@ GET {{baseUrl}}/techs
 # @name getRepositoryData
 GET {{baseUrl}}/repos/portfolio
 Authorization: Bearer {{token}}
+
+# --- Public routes ---
+
+###
+
+# @name getPublicProjects
+GET {{baseUrl}}/public/projects/{{username}}?apiKey={{apiKey}}

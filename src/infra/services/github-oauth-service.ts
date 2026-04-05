@@ -1,5 +1,5 @@
-import { GITHUB_API_URL, GITHUB_LOGIN_URL } from '@config/constants.ts'
 import { env } from '@config/env.ts'
+import { GITHUB_API_URL, GITHUB_LOGIN_URL } from '@core/constants.ts'
 import { BadGatewayError } from '@core/errors/bad-gateway-error.ts'
 import type {
   GetRepositoryDataRequest,

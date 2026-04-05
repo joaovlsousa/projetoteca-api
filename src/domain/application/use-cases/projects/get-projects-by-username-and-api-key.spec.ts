@@ -1,30 +1,29 @@
 import { ForbiddenError } from '@core/errors/forbidden-error.ts'
-import { NotFoundError } from '@core/errors/not-found-error.ts'
 import { HashService } from '@core/services/hash-service.ts'
-import { faker } from '@faker-js/faker'
 import { makeProject } from '@test/factories/make-project.ts'
 import { makeUser } from '@test/factories/make-user.ts'
 import { InMemoryProjectsRepository } from '@test/repositories/in-memory-projects-repository.ts'
 import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repository.ts'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { GetProjectsByUsernameUseCase } from './get-projects-by-username.ts'
+import { GetProjectsByUsernameAndApiKeyUseCase } from './get-projects-by-username-and-api-key.ts'
 
-describe('get projects by username', () => {
+describe('get projects by username and api key', () => {
   let inMemoryUsersRepository: InMemoryUsersRepository
   let inMemoryProjectsRepository: InMemoryProjectsRepository
-  let getProjectsByUsernameUseCase: GetProjectsByUsernameUseCase
+  let getProjectsByUsernameAndApiKeyUseCase: GetProjectsByUsernameAndApiKeyUseCase
 
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
     inMemoryProjectsRepository = new InMemoryProjectsRepository()
 
-    getProjectsByUsernameUseCase = new GetProjectsByUsernameUseCase(
-      inMemoryUsersRepository,
-      inMemoryProjectsRepository
-    )
+    getProjectsByUsernameAndApiKeyUseCase =
+      new GetProjectsByUsernameAndApiKeyUseCase(
+        inMemoryUsersRepository,
+        inMemoryProjectsRepository
+      )
   })
 
-  it('should be able get projects by username', async () => {
+  it('should be able get projects by username if is public profile', async () => {
     const user = await makeUser({
       isPublicProfile: true,
     })
@@ -41,17 +40,17 @@ describe('get projects by username', () => {
         : await inMemoryProjectsRepository.create(makeProject())
     }
 
-    const { projects } = await getProjectsByUsernameUseCase.execute({
+    const { projects } = await getProjectsByUsernameAndApiKeyUseCase.execute({
       username: user.username,
-      apiKeyHash: null,
+      apiKey: null,
     })
 
     expect(projects).toHaveLength(4)
   })
 
-  it('should be able get projects by username with portfolio connected', async () => {
+  it('should be able get projects by username with api key', async () => {
     const user = await makeUser({
-      apiKeyHash: await HashService.hash(faker.internet.url()),
+      apiKeyHash: await HashService.hash('api-key'),
     })
 
     await inMemoryUsersRepository.create(user)
@@ -66,32 +65,49 @@ describe('get projects by username', () => {
         : await inMemoryProjectsRepository.create(makeProject())
     }
 
-    const { projects } = await getProjectsByUsernameUseCase.execute({
+    const { projects } = await getProjectsByUsernameAndApiKeyUseCase.execute({
       username: user.username,
-      apiKeyHash: user.apiKeyHash ?? null,
+      apiKey: 'api-key',
     })
 
     expect(projects).toHaveLength(4)
   })
 
-  it('should not be able get projects because user profile is private', async () => {
+  it('should not be able get projects because is private profile', async () => {
     const user = await makeUser()
     await inMemoryUsersRepository.create(user)
 
     expect(
-      getProjectsByUsernameUseCase.execute({
+      getProjectsByUsernameAndApiKeyUseCase.execute({
         username: user.username,
-        apiKeyHash: null,
+        apiKey: null,
       })
     ).rejects.toThrow(ForbiddenError)
   })
 
-  it('should not be able get projects because user not exists', async () => {
+  it('should not be able get projects because api key not exists', async () => {
+    const user = await makeUser()
+    await inMemoryUsersRepository.create(user)
+
     expect(
-      getProjectsByUsernameUseCase.execute({
-        username: 'username',
-        apiKeyHash: null,
+      getProjectsByUsernameAndApiKeyUseCase.execute({
+        username: user.username,
+        apiKey: 'api-key',
       })
-    ).rejects.toThrow(NotFoundError)
+    ).rejects.toThrow(ForbiddenError)
+  })
+
+  it('should not be able get projects because invalid api key', async () => {
+    const user = await makeUser({
+      apiKeyHash: await HashService.hash('api-key'),
+    })
+    await inMemoryUsersRepository.create(user)
+
+    expect(
+      getProjectsByUsernameAndApiKeyUseCase.execute({
+        username: user.username,
+        apiKey: 'invalid-api-key',
+      })
+    ).rejects.toThrow(ForbiddenError)
   })
 })

@@ -1,22 +1,22 @@
 import { httpErrorSchema } from '@core/schemas/http-error-schema.ts'
-import { GetProjectsByUsernameUseCase } from '@domain/application/use-cases/projects/get-projects-by-username.ts'
+import { GetProjectsByUsernameAndApiKeyUseCase } from '@domain/application/use-cases/projects/get-projects-by-username-and-api-key.ts'
 import { DrizzleProjectsRepository } from '@infra/database/drizzle/repositories/drizzle-projects-respository.ts'
 import { DrizzleUsersRepository } from '@infra/database/drizzle/repositories/drizzle-users-respository.ts'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { allowAllOriginMiddleware } from '../../middlewares/allow-all-origin-middleware.ts'
 
-export const getProjectsByUsernameRoute: FastifyPluginAsyncZod = async (
-  app
-) => {
+export const getPublicProjectsRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
-    '/users/:username/projects',
+    '/public/projects/:username',
     {
       schema: {
         summary: 'Get projects by username',
         tags: ['Projects'],
         params: z.object({
           username: z.string(),
+        }),
+        querystring: z.object({
+          apiKey: z.string().optional(),
         }),
         response: {
           200: z.object({
@@ -45,26 +45,26 @@ export const getProjectsByUsernameRoute: FastifyPluginAsyncZod = async (
               })
             ),
           }),
+          400: httpErrorSchema,
           403: httpErrorSchema,
           404: httpErrorSchema,
           500: httpErrorSchema,
         },
       },
-      preHandler: [allowAllOriginMiddleware],
     },
     async (request, reply) => {
-      const apiKeyHash = await request.getPortfolioAccessToken()
-
       const { username } = request.params
+      const { apiKey = null } = request.query
 
-      const getProjectsByUsernameUseCase = new GetProjectsByUsernameUseCase(
-        new DrizzleUsersRepository(),
-        new DrizzleProjectsRepository()
-      )
+      const getProjectsByUsernameAndApiKeyUseCase =
+        new GetProjectsByUsernameAndApiKeyUseCase(
+          new DrizzleUsersRepository(),
+          new DrizzleProjectsRepository()
+        )
 
-      const { projects } = await getProjectsByUsernameUseCase.execute({
+      const { projects } = await getProjectsByUsernameAndApiKeyUseCase.execute({
         username,
-        apiKeyHash,
+        apiKey,
       })
 
       return reply.status(200).send({

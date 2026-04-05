@@ -7,8 +7,8 @@ import { createProjectRoute } from '@infra/http/routes/projects/create-project.t
 import { deleteProjectRoute } from '@infra/http/routes/projects/delete-project.ts'
 import { getProjectByIdRoute } from '@infra/http/routes/projects/get-project-by-id.ts'
 import { getProjectsByUserIdRoute } from '@infra/http/routes/projects/get-projects-by-user-id.ts'
-import { getProjectsByUsernameRoute } from '@infra/http/routes/projects/get-projects-by-username.ts'
 import { getProjectsMetadataByUserIdRoute } from '@infra/http/routes/projects/get-projects-metadata-by-user-id.ts'
+import { getPublicProjectsRoute } from '@infra/http/routes/projects/get-public-projects.ts'
 import { getStorageMetadataByUserIdRoute } from '@infra/http/routes/projects/get-storage-metadata-by-user-id.ts'
 import { updateProjectRoute } from '@infra/http/routes/projects/update-project.ts'
 import { uploadProjectImageRoute } from '@infra/http/routes/projects/upload-project-image.ts'
@@ -65,7 +65,7 @@ server.register(getApiKeyRoute)
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
 server.register(getProjectsByUserIdRoute)
-server.register(getProjectsByUsernameRoute)
+server.register(getPublicProjectsRoute)
 server.register(getProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
 server.register(getStorageMetadataByUserIdRoute)
