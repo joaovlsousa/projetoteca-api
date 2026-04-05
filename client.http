@@ -25,6 +25,17 @@ Authorization: Bearer {{token}}
 
 ###
 
+# @name updateProfileName
+PATCH {{baseUrl}}/users/profile/name
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "João Vitor de Lima Sousa"
+}
+
+###
+
 # @name getProfileStatus
 GET {{baseUrl}}/users/profile/status
 Authorization: Bearer {{token}}

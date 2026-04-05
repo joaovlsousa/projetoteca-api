@@ -67,6 +67,10 @@ export class User extends Entity<UserProps> {
     return this.props.updatedAt
   }
 
+  public set name(name: string) {
+    this.props.name = name
+  }
+
   public set githubAccessTokenHash(githubAccessTokenHash: string) {
     this.props.githubAccessTokenHash = githubAccessTokenHash
   }
