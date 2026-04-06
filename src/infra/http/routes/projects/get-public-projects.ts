@@ -11,7 +11,7 @@ export const getPublicProjectsRoute: FastifyPluginAsyncZod = async (app) => {
     {
       schema: {
         summary: 'Get projects by username',
-        tags: ['Projects'],
+        tags: ['Public'],
         params: z.object({
           username: z.string(),
         }),

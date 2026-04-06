@@ -161,3 +161,8 @@ Authorization: Bearer {{token}}
 
 # @name getPublicProjects
 GET {{baseUrl}}/public/projects/{{username}}?apiKey={{apiKey}}
+
+###
+
+# @name healthCheck
+GET {{baseUrl}}/public/health

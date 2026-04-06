@@ -3,6 +3,7 @@ import { fastifyMultipart } from '@fastify/multipart'
 import { fastifySwagger } from '@fastify/swagger'
 import { errorHandler } from '@infra/http/errors/error-handler.ts'
 import { authenticateWithGithubRoute } from '@infra/http/routes/auth/authenticate-with-github.ts'
+import { healthCheckRoute } from '@infra/http/routes/health-check.ts'
 import { createProjectRoute } from '@infra/http/routes/projects/create-project.ts'
 import { deleteProjectRoute } from '@infra/http/routes/projects/delete-project.ts'
 import { getProjectByIdRoute } from '@infra/http/routes/projects/get-project-by-id.ts'
@@ -71,7 +72,6 @@ server.register(deleteApiKeyRoute)
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
 server.register(getProjectsByUserIdRoute)
-server.register(getPublicProjectsRoute)
 server.register(getProjectByIdRoute)
 server.register(getProjectsMetadataByUserIdRoute)
 server.register(getStorageMetadataByUserIdRoute)
@@ -81,6 +81,9 @@ server.register(deleteProjectRoute)
 server.register(getAllTechsRoute)
 
 server.register(getRepositoryDataRoute)
+
+server.register(getPublicProjectsRoute)
+server.register(healthCheckRoute)
 
 server
   .listen({
