@@ -3,7 +3,7 @@
 @token = {{auth.response.body.$.token}}
 @projectId = {{createProject.response.body.$.projectId}}
 @username = {{getProfile.response.body.$.user.username}}
-@apiKey = {{generateApiKey.response.body.$.apiKey}}
+@apiKey = {{getApiKey.response.body.$.apiKey}}
 
 # --- User routes ---
 
@@ -14,7 +14,7 @@ POST {{baseUrl}}/sessions/github
 Content-Type: application/json
 
 {
-  "code": "03ade1d138c8adff932d"
+  "code": "c296047cae84fe9fb706"
 }
 
 ###
@@ -31,7 +31,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "João Vitor de Lima Sousa"
+  "name": "João Vitor"
 }
 
 ###
@@ -61,6 +61,12 @@ Authorization: Bearer {{token}}
 
 # @name getApiKey
 GET {{baseUrl}}/users/api-key
+Authorization: Bearer {{token}}
+
+###
+
+# @name deleteApiKey
+DELETE {{baseUrl}}/users/api-key
 Authorization: Bearer {{token}}
 
 # --- Projects routes ---

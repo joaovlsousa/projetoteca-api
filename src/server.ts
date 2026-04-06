@@ -14,6 +14,7 @@ import { updateProjectRoute } from '@infra/http/routes/projects/update-project.t
 import { uploadProjectImageRoute } from '@infra/http/routes/projects/upload-project-image.ts'
 import { getRepositoryDataRoute } from '@infra/http/routes/repositories/get-repository-data.ts'
 import { getAllTechsRoute } from '@infra/http/routes/techs/get-all-techs.ts'
+import { deleteApiKeyRoute } from '@infra/http/routes/users/delete-api-key.ts'
 import { generateApiKeyRoute } from '@infra/http/routes/users/generate-api-key.ts'
 import { getApiKeyRoute } from '@infra/http/routes/users/get-api-key.ts'
 import { getProfileRoute } from '@infra/http/routes/users/get-profile.ts'
@@ -65,6 +66,7 @@ server.register(getProfileStatusRoute)
 server.register(updateProfileStatusRoute)
 server.register(generateApiKeyRoute)
 server.register(getApiKeyRoute)
+server.register(deleteApiKeyRoute)
 
 server.register(createProjectRoute)
 server.register(updateProjectRoute)
