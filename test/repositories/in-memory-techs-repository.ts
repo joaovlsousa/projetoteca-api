@@ -16,6 +16,12 @@ export class InMemoryTechsRepository implements TechsRespository {
     return techs
   }
 
+  async getManyByNameList(techsNames: string[]): Promise<Tech[]> {
+    const techs = this.techs.filter((tech) => techsNames.includes(tech.name))
+
+    return techs
+  }
+
   async getAll(): Promise<Tech[]> {
     return this.techs
   }

@@ -16,7 +16,7 @@ interface GetRepositoryDataResponse {
     description: string | null
     homepageUrl: string | null
     githubUrl: string
-    techIds: string[]
+    techsIds: string[]
   }
 }
 
@@ -48,7 +48,7 @@ export class GetRepositoryData {
         repository: repositorySlug,
       })
 
-    const techs = await this.techsRespository.getManyByIdList([
+    const techs = await this.techsRespository.getManyByNameList([
       'GIT',
       githubRepository.language.toUpperCase(),
     ])
@@ -61,7 +61,7 @@ export class GetRepositoryData {
         description: githubRepository.description,
         homepageUrl: githubRepository.homepageUrl,
         githubUrl: githubRepository.githubUrl,
-        techIds: techs.map((tech) => tech.id.toString()),
+        techsIds: techs.map((tech) => tech.id.toString()),
       },
     }
   }

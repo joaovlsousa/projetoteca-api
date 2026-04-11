@@ -32,6 +32,16 @@ export class DrizzleTechsRepository implements TechsRespository {
     return raw.map(DrizzleTechsMapper.toDomain)
   }
 
+  async getManyByNameList(techsNames: string[]): Promise<Tech[]> {
+    const raw = await this.db
+      .select()
+      .from(techsTable)
+      .where(inArray(techsTable.name, techsNames))
+      .orderBy(asc(techsTable.name))
+
+    return raw.map(DrizzleTechsMapper.toDomain)
+  }
+
   async getOneByName(name: string): Promise<Tech | null> {
     const [raw] = await this.db
       .select()
