@@ -44,6 +44,13 @@ export const getPublicProjectsRoute: FastifyPluginAsyncZod = async (app) => {
                 updatedAt: z.date().nullable(),
               })
             ),
+            user: z
+              .object({
+                name: z.string(),
+                username: z.string(),
+                avatarUrl: z.httpUrl(),
+              })
+              .optional(),
           }),
           400: httpErrorSchema,
           403: httpErrorSchema,
@@ -62,10 +69,11 @@ export const getPublicProjectsRoute: FastifyPluginAsyncZod = async (app) => {
           new DrizzleProjectsRepository()
         )
 
-      const { projects } = await getProjectsByUsernameAndApiKeyUseCase.execute({
-        username,
-        apiKey,
-      })
+      const { projects, user } =
+        await getProjectsByUsernameAndApiKeyUseCase.execute({
+          username,
+          apiKey,
+        })
 
       return reply.status(200).send({
         projects: projects.map((project) => ({
@@ -84,6 +92,13 @@ export const getPublicProjectsRoute: FastifyPluginAsyncZod = async (app) => {
           createdAt: project.createdAt,
           updatedAt: project.updatedAt ?? null,
         })),
+        user: user
+          ? {
+              name: user.name,
+              username: user.username,
+              avatarUrl: user.avatarUrl,
+            }
+          : undefined,
       })
     }
   )

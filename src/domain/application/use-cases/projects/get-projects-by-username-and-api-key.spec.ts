@@ -24,28 +24,30 @@ describe('get projects by username and api key', () => {
   })
 
   it('should be able get projects by username if is public profile', async () => {
-    const user = await makeUser({
+    const domainUser = await makeUser({
       isPublicProfile: true,
     })
 
-    await inMemoryUsersRepository.create(user)
+    await inMemoryUsersRepository.create(domainUser)
 
     for (let i = 0; i < 8; i++) {
       i % 2 === 0
         ? await inMemoryProjectsRepository.create(
             makeProject({
-              userId: user.id,
+              userId: domainUser.id,
             })
           )
         : await inMemoryProjectsRepository.create(makeProject())
     }
 
-    const { projects } = await getProjectsByUsernameAndApiKeyUseCase.execute({
-      username: user.username,
-      apiKey: null,
-    })
+    const { projects, user } =
+      await getProjectsByUsernameAndApiKeyUseCase.execute({
+        username: domainUser.username,
+        apiKey: null,
+      })
 
     expect(projects).toHaveLength(4)
+    expect(user).toEqual(domainUser)
   })
 
   it('should be able get projects by username with api key', async () => {

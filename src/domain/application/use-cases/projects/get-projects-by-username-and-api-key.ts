@@ -3,6 +3,7 @@ import { NotFoundError } from '@core/errors/not-found-error.ts'
 import { HashService } from '@core/services/hash-service.ts'
 import type { UsersRespository } from '@domain/application/repositories/users-repository.ts'
 import type { Project } from '@domain/entities/project.ts'
+import type { User } from '@domain/entities/user.ts'
 import type { ProjectsRespository } from '../../repositories/projects-repository.ts'
 
 interface GetProjectsByUsernameAndApiKeyUseCaseRequest {
@@ -12,6 +13,7 @@ interface GetProjectsByUsernameAndApiKeyUseCaseRequest {
 
 interface GetProjectsByUsernameAndApiKeyUseCaseResponse {
   projects: Project[]
+  user?: User
 }
 
 export class GetProjectsByUsernameAndApiKeyUseCase {
@@ -60,6 +62,7 @@ export class GetProjectsByUsernameAndApiKeyUseCase {
 
     return {
       projects,
+      user,
     }
   }
 }
