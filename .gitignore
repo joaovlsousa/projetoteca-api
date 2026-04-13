@@ -1,6 +1,6 @@
 node_modules
 dist
-coverage
+build
 .env
 **-lock.yaml
 !temp/image_to_test.png
