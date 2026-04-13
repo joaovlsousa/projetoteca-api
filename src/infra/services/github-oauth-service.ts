@@ -18,10 +18,6 @@ export class GithubOAuthService implements OAuthService {
       'client_secret',
       env.GITHUB_OAUTH_CLIENT_SECRET
     )
-    githubOAuthURL.searchParams.set(
-      'redirect_uri',
-      env.GITHUB_OAUTH_CLIENT_REDIRECT_URI
-    )
     githubOAuthURL.searchParams.set('code', code)
     githubOAuthURL.searchParams.set('scope', 'read:user public_repo')
 
